@@ -4,11 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>FLUX | Addons para Minecraft Bedrock</title>
-<meta name="description" content="FLUX crea addons originales para Minecraft Bedrock. Descargá Teo: Los Cinco Días, un addon cooperativo de supervivencia, terror y humor.">
+<meta name="description" content="FLUX crea addons originales para Minecraft Bedrock. Descargá Teo: Los Cinco Días, de supervivencia y terror, y Pawbound, mascotas con personalidad, confianza y memoria.">
 <meta name="theme-color" content="#0a0712">
 <meta property="og:title" content="FLUX | Addons para Minecraft Bedrock">
-<meta property="og:description" content="Teo: Los Cinco Días. Protegé a Teo de Ginno durante cinco noches.">
-<meta property="og:image" content="assets/teo-escena.jpg">
+<meta property="og:description" content="Teo: Los Cinco Días y Pawbound: Mascotas Inteligentes. Addons originales para Minecraft Bedrock.">
+<meta property="og:image" content="assets/pawbound-escena.jpg">
 <link rel="icon" type="image/png" href="flux-favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -68,8 +68,14 @@ nav a.nav-cta:hover{background:#ff9166;color:#1a0b06}
 .burger[aria-expanded="true"] i::after{top:0;transform:rotate(-45deg)}
 #progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--violet),var(--ember));z-index:60}
 
-/* ---------- hero ---------- */
-.hero{position:relative;min-height:max(620px,min(100svh,940px));overflow:hidden;isolation:isolate;display:flex;align-items:flex-start;padding:112px max(5%,20px) 0}
+/* ---------- hero (banner rotativo) ---------- */
+.hero{position:relative;min-height:max(620px,min(100svh,940px));overflow:hidden;isolation:isolate}
+.slide{position:absolute;inset:0;display:flex;align-items:flex-start;padding:112px max(5%,20px) 0;opacity:0;visibility:hidden;transition:opacity 1s ease,visibility 1s}
+.slide.on{opacity:1;visibility:visible;z-index:1}
+.slide .hero-copy{transform:translateY(16px);opacity:0;transition:transform .8s .25s cubic-bezier(.2,.7,.2,1),opacity .8s .25s}
+.slide.on .hero-copy{transform:none;opacity:1}
+.slide .stack{transform:scale(1.06);transition:transform 9s ease-out}
+.slide.on .stack{transform:none}
 .stack{position:absolute;inset:0;z-index:-1}
 .layer{max-width:none;position:absolute;left:-4%;top:-4%;width:108%;height:108%;object-fit:cover;object-position:52% 72%;will-change:transform;user-select:none;-webkit-user-drag:none}
 .stack::after{content:"";position:absolute;inset:0;pointer-events:none;
@@ -100,6 +106,32 @@ nav a.nav-cta:hover{background:#ff9166;color:#1a0b06}
 .hint{position:absolute;z-index:2;left:max(5%,20px);bottom:22px;font-size:14px;color:#b9acd8;display:flex;align-items:center;gap:8px;text-shadow:0 2px 10px #000}
 .hint i{width:8px;height:8px;border-radius:50%;background:var(--ember);box-shadow:0 0 0 0 rgba(255,122,69,.7);animation:ping 2s infinite}
 @keyframes ping{70%{box-shadow:0 0 0 12px rgba(255,122,69,0)}100%{box-shadow:0 0 0 0 rgba(255,122,69,0)}}
+.slide{isolation:isolate}
+.slide.paw .layer{object-position:64% 72%}
+.slide.paw .stack::after{background:
+    linear-gradient(90deg,rgba(14,7,24,.8) 0%,rgba(14,7,24,.45) 34%,transparent 58%),
+    linear-gradient(180deg,rgba(10,7,18,.5) 0,transparent 24%,transparent 70%,var(--ink) 100%)}
+.slide.paw .hero h1 em,.slide.paw h1 em{color:#ffb38a}
+.new{display:inline-flex;align-items:center;gap:8px;margin-bottom:16px;padding:5px 12px 5px 8px;border-radius:999px;background:rgba(255,122,69,.16);border:1px solid rgba(255,150,110,.5);color:#ffd2bd;font-size:13.5px;font-weight:700;text-shadow:none}
+.new i{width:8px;height:8px;border-radius:50%;background:var(--ember)}
+.bubble.paw{background:#fff6ee;color:#3a1a12;box-shadow:0 8px 24px rgba(0,0,0,.45)}
+.bubble.paw b{color:#d9531f}
+.hearts{position:absolute;inset:0;pointer-events:none;z-index:2;overflow:hidden}
+.hearts span{position:absolute;width:18px;height:16px;background:no-repeat center/contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 9 8' shape-rendering='crispEdges'%3E%3Cpath fill='%238e1d3a' d='M1 0h2v1H1zM6 0h2v1H6zM0 1h1v3H0zM3 1h1v1H3zM5 1h1v1H5zM8 1h1v3H8zM4 2h1v1H4zM1 4h1v1H1zM7 4h1v1H7zM2 5h1v1H2zM6 5h1v1H6zM3 6h1v1H3zM5 6h1v1H5zM4 7h1v1H4z'/%3E%3Cpath fill='%23ff4f7b' d='M1 1h2v1H1zM6 1h2v1H6zM1 2h3v1H1zM5 2h3v1H5zM1 3h7v1H1zM2 4h5v1H2zM3 5h3v1H3zM4 6h1v1H4z'/%3E%3Cpath fill='%23ffc2d1' d='M1 1h1v1H1zM6 1h1v1H6z'/%3E%3C/svg%3E");animation:rise 1.6s ease-out forwards;opacity:0}
+@keyframes rise{0%{opacity:0;transform:translateY(0) scale(.6)}15%{opacity:1}100%{opacity:0;transform:translateY(-90px) scale(1.15)}}
+
+/* controles del banner */
+.switch{position:absolute;z-index:4;right:max(5%,20px);bottom:22px;display:flex;align-items:center;gap:8px;padding:6px;border-radius:16px;background:rgba(10,7,18,.55);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border:1px solid rgba(201,162,255,.18)}
+.sw{position:relative;display:flex;align-items:center;gap:10px;min-height:48px;padding:5px 14px 5px 5px;border:1px solid transparent;border-radius:12px;background:none;color:var(--muted);font-weight:700;font-size:14.5px;overflow:hidden;transition:background .2s,color .2s,border-color .2s}
+.sw img{width:56px;height:36px;object-fit:cover;border-radius:8px;opacity:.6;transition:opacity .2s}
+.sw:hover{color:#fff;background:rgba(139,77,255,.14)}
+.sw[aria-selected="true"]{color:#fff;background:rgba(139,77,255,.2);border-color:rgba(201,162,255,.35)}
+.sw[aria-selected="true"] img{opacity:1}
+.sw .fill{position:absolute;left:0;bottom:0;height:3px;width:0;background:linear-gradient(90deg,var(--violet),var(--ember))}
+.sw small{display:block;font-weight:500;font-size:12px;color:#9d90bd}
+.pause{width:40px;height:40px;border-radius:10px;border:1px solid var(--line);background:none;display:grid;place-items:center;color:var(--muted)}
+.pause:hover{color:#fff;border-color:var(--glow)}
+.pause svg{width:16px;height:16px}
 
 /* ---------- secciones ---------- */
 .block{padding:92px max(5%,20px)}
@@ -109,7 +141,12 @@ h2{font-family:var(--display);font-weight:700;font-size:clamp(32px,4.6vw,50px);l
 .head{margin-bottom:40px}
 
 /* tarjetas de addons */
-.addons{display:grid;grid-template-columns:1.55fr 1fr;gap:22px}
+.addons{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.addons .soon{grid-column:1/-1;min-height:0;flex-direction:row;text-align:left;padding:22px 28px;gap:22px}
+.addons .soon .bolt{width:48px;height:48px;flex:none}
+.addons .soon p{max-width:none}
+.paw-card .cover img{object-position:55% 60%}
+.badge.new-badge{color:#ffd2bd;border-color:rgba(255,150,110,.6);background:rgba(40,14,10,.7)}
 .card{background:linear-gradient(180deg,rgba(26,18,48,.92),rgba(16,10,30,.92));border:1px solid var(--line);border-radius:var(--r);overflow:hidden;position:relative}
 .addon-main{display:grid;grid-template-rows:auto 1fr}
 .cover{aspect-ratio:16/9;overflow:hidden;position:relative;background:#0d0a1c}
@@ -169,6 +206,48 @@ h2{font-family:var(--display);font-weight:700;font-size:clamp(32px,4.6vw,50px);l
 .char.g p.say{border-color:#c0283a;color:#ffd7d7}
 .char.g{background:linear-gradient(180deg,#1c0b17,#10070f);border-color:#4a1a2c}
 
+/* pawbound */
+.paw-sec{position:relative}
+.paw-sec .tab[aria-selected="true"]{border-color:var(--ember)}
+.pers{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:22px}
+.per{--c:#ffd66b;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 8px 12px;text-align:center;transition:.2s}
+.per:hover{border-color:var(--c)}
+.per .n{display:block;font-family:var(--display);font-size:21px;line-height:1.1;color:var(--c)}
+.per .t{display:block;font-size:12.5px;color:var(--muted);margin-top:4px}
+.per[aria-selected="true"]{background:linear-gradient(180deg,color-mix(in srgb,var(--c) 22%,#1a1230),#1a1230);border-color:var(--c);box-shadow:0 0 0 1px var(--c),0 10px 30px color-mix(in srgb,var(--c) 25%,transparent)}
+.per-detail{display:grid;grid-template-columns:1.1fr 1fr;gap:18px}
+.per-detail .slot{background:linear-gradient(160deg,#2a1d3e,#1a1230)}
+.per-detail h4 .dot{background:var(--c);box-shadow:0 0 12px var(--c)}
+.ticks{list-style:none;display:grid;gap:10px}
+.ticks li{position:relative;padding-left:26px;color:#d9cfee}
+.ticks li::before{content:"";position:absolute;left:0;top:.5em;width:12px;height:12px;background:var(--c,#ffb38a);box-shadow:0 0 10px var(--c,#ffb38a)}
+.meter{position:relative;margin:6px 0 26px}
+.meter .track{height:14px;border-radius:99px;background:#1d1438;border:1px solid var(--line);overflow:hidden}
+.meter .track i{display:block;height:100%;width:0;background:linear-gradient(90deg,#8b4dff,#ff6fa3 60%,#ffb38a);transition:width .6s cubic-bezier(.2,.7,.2,1)}
+.lvls{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-top:14px}
+.lvl{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 6px;text-align:center;transition:.2s}
+.lvl:hover{border-color:#ff8fb4}
+.lvl b{display:block;font-family:var(--display);font-size:26px;line-height:1;color:#ffb3cb}
+.lvl span{display:block;font-size:12.5px;color:var(--muted);margin-top:4px}
+.lvl[aria-selected="true"]{background:linear-gradient(180deg,#4a1d4a,#25132f);border-color:#ff8fb4;box-shadow:0 0 0 1px #ff8fb4,0 10px 30px rgba(255,111,163,.25)}
+.lvl[aria-selected="true"] span{color:#ffdbe8}
+.updown{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px}
+.updown .slot{min-height:0}
+.updown .down li::before{background:#ff6b6b;box-shadow:0 0 10px #ff6b6b}
+.items{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:14px}
+#lvlDetail{min-height:0}
+.item{display:grid;grid-template-columns:64px 1fr;gap:16px;align-items:start;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:18px;transition:border-color .2s,transform .2s}
+.item:hover{border-color:#5a40a0;transform:translateY(-2px)}
+.item img{width:64px;height:64px;image-rendering:pixelated;filter:drop-shadow(0 6px 10px rgba(0,0,0,.5))}
+.item h4{font-family:var(--display);font-size:20px;line-height:1.1}
+.item p{color:var(--muted);font-size:15px;margin-top:6px}
+.item .rec{display:inline-block;margin-top:10px;font-size:13px;color:#ffcfb8;background:rgba(255,122,69,.1);border:1px solid rgba(255,122,69,.3);border-radius:8px;padding:3px 9px}
+.revpick{display:flex;gap:6px;background:#0f0a20;border:1px solid var(--line);border-radius:12px;padding:4px}
+.revpick button{flex:1;border:0;background:none;border-radius:9px;padding:9px 10px;font-weight:700;font-size:15px;color:var(--muted)}
+.revpick button[aria-pressed="true"]{background:var(--violet);color:#fff}
+.faq h3{font-family:var(--display);font-size:24px;margin:18px 0 4px;color:var(--glow)}
+.faq h3:first-child{margin-top:0}
+
 /* instalar */
 .steps{list-style:none;display:grid;gap:12px;counter-reset:s}
 .steps li{counter-increment:s}
@@ -183,6 +262,7 @@ h2{font-family:var(--display);font-weight:700;font-size:clamp(32px,4.6vw,50px);l
 .step .d{display:block;color:var(--muted);font-size:15.5px;margin-top:2px}
 .prog{margin-top:18px;display:flex;align-items:center;gap:14px;color:var(--muted);font-size:15px}
 .bar2{flex:1;height:8px;background:#1d1438;border-radius:99px;overflow:hidden;max-width:340px}
+.bar2 i.fill{position:static}
 .bar2 i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--violet),#58d68d);transition:width .35s}
 .reqs{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
 .req{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:20px}
@@ -246,6 +326,7 @@ footer p+p{margin-top:6px;font-size:13px;color:#6f6590}
   .addons,.reviews,.about,.chars{grid-template-columns:1fr}
   .dn{grid-template-columns:1fr}
   .boss{grid-template-columns:1fr}
+  .per-detail,.updown{grid-template-columns:1fr}
 }
 @media(max-width:760px){
   header.bar{height:64px}
@@ -257,14 +338,25 @@ footer p+p{margin-top:6px;font-size:13px;color:#6f6590}
   nav a.nav-cta{margin:6px 0 0;text-align:center}
   .block{padding:64px max(5%,18px)}
   .hero{padding-top:92px;min-height:max(640px,100svh)}
-  .stack::after{background:linear-gradient(180deg,rgba(10,7,18,.82) 0,rgba(10,7,18,.45) 40%,transparent 62%,var(--ink) 100%)}
+  .stack::after,.slide.paw .stack::after{background:linear-gradient(180deg,rgba(10,7,18,.82) 0,rgba(10,7,18,.45) 40%,transparent 62%,var(--ink) 100%)}
   .layer{object-position:50% 80%}
+  .slide.paw .layer{object-position:58% 80%}
+  .switch{left:50%;right:auto;transform:translateX(-50%);bottom:16px}
+  .sw{padding:5px;min-height:44px}
+  .sw img{width:52px;height:34px}
+  .sw span{display:none}
+  .pers{grid-template-columns:repeat(3,1fr)}
+  .lvl span{display:none}
   .days{gap:5px}
   .day{padding:10px 2px}.day .n{font-size:26px}.day .t{font-size:11.5px}
   .char{grid-template-columns:.8fr 1.2fr;min-height:0;padding-top:18px}
   .char .pic img{max-height:230px}
   .tab{padding:10px 12px;font-size:15px}
   .hint{display:none}
+  .pers,.lvls{gap:5px}
+  .per{padding:10px 2px}.per .n{font-size:15px}.per .t{display:none}
+  .lvl{padding:10px 2px}.lvl b{font-size:20px}.lvl span{font-size:11px}
+  .addons .soon{flex-direction:column;text-align:center}
 }
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
@@ -286,37 +378,68 @@ footer p+p{margin-top:6px;font-size:13px;color:#6f6590}
   <nav id="nav" aria-label="Principal">
     <a href="#addons">Addons</a>
     <a href="#teo">Teo</a>
+    <a href="#pawbound">Pawbound</a>
     <a href="#resenas">Reseñas</a>
     <a href="#preguntas">Preguntas</a>
     <a href="#flux">FLUX</a>
-    <a class="nav-cta" href="./TEO_Los_Cinco_Dias_v1.0.0.mcaddon" download>Descargar Teo</a>
+    <a class="nav-cta" id="navCta" href="./TEO_Los_Cinco_Dias_v1.0.0.mcaddon" download>Descargar Teo</a>
   </nav>
 </header>
 
 <main>
-  <!-- ===== HERO ===== -->
-  <div class="hero" id="inicio">
-    <div class="stack" id="stack" aria-hidden="true">
-      <img class="layer" data-depth="0.25" src="assets/sky.jpg" alt="" width="2400" height="1350" fetchpriority="high">
-      <img class="layer" data-depth="0.6" src="assets/forest.webp" alt="" width="2400" height="1350">
-      <img class="layer" data-depth="1.1" id="ginnoLayer" src="assets/ginno.webp" alt="" width="2400" height="1350">
-      <img class="layer" data-depth="1.8" id="teoLayer" src="assets/teo.webp" alt="" width="2400" height="1350">
-      <div class="flash" id="flash"></div>
-    </div>
+  <!-- ===== HERO: banner rotativo ===== -->
+  <div class="hero" id="inicio" role="region" aria-roledescription="carrusel" aria-label="Addons destacados">
 
-    <div class="hero-copy">
-      <h1>Sobreviví cinco noches.<br><em>Protegé a Teo.</em></h1>
-      <p class="lead">Teo: Los Cinco Días es el primer addon de FLUX para Minecraft Bedrock. Un caniche mal hablado, un gigante con encendedor y tu refugio en el medio.</p>
-      <div class="actions">
-        <a class="btn btn-ember" href="./TEO_Los_Cinco_Dias_v1.0.0.mcaddon" download>Descargar el addon</a>
-        <a class="btn btn-ghost" href="#teo">Ver cómo se juega</a>
+    <!-- slide 1: Teo -->
+    <section class="slide teo on" id="slideTeo" role="group" aria-roledescription="diapositiva" aria-label="1 de 2: Teo, Los Cinco Días">
+      <div class="stack" aria-hidden="true">
+        <img class="layer" data-depth="0.25" src="assets/sky.jpg" alt="" width="2400" height="1350" fetchpriority="high">
+        <img class="layer" data-depth="0.6" src="assets/forest.webp" alt="" width="2400" height="1350">
+        <img class="layer" data-depth="1.1" id="ginnoLayer" src="assets/ginno.webp" alt="" width="2400" height="1350">
+        <img class="layer" data-depth="1.8" id="teoLayer" src="assets/teo.webp" alt="" width="2400" height="1350">
+        <div class="flash" id="flash"></div>
       </div>
-      <p class="hero-meta">Versión 1.0.0 para Minecraft Bedrock 1.26.60 o superior. Pesa 2,8 MB.</p>
-    </div>
+      <div class="hero-copy">
+        <h1>Sobreviví cinco noches.<br><em>Protegé a Teo.</em></h1>
+        <p class="lead">Teo: Los Cinco Días es el primer addon de FLUX para Minecraft Bedrock. Un caniche mal hablado, un gigante con encendedor y tu refugio en el medio.</p>
+        <div class="actions">
+          <a class="btn btn-ember" href="./TEO_Los_Cinco_Dias_v1.0.0.mcaddon" download>Descargar el addon</a>
+          <a class="btn btn-ghost" href="#teo">Ver cómo se juega</a>
+        </div>
+        <p class="hero-meta">Versión 1.0.0 para Minecraft Bedrock 1.26.60 o superior. Pesa 2,8 MB.</p>
+      </div>
+      <div class="bubble teo" id="bubbleTeo" role="status" aria-live="polite"></div>
+      <div class="bubble ginno" id="bubbleGinno" role="status" aria-live="polite"></div>
+      <p class="hint"><i></i>Tocá a Teo o a Ginno</p>
+    </section>
 
-    <div class="bubble teo" id="bubbleTeo" role="status" aria-live="polite"></div>
-    <div class="bubble ginno" id="bubbleGinno" role="status" aria-live="polite"></div>
-    <p class="hint"><i></i>Tocá a Teo o a Ginno</p>
+    <!-- slide 2: Pawbound -->
+    <section class="slide paw" id="slidePaw" role="group" aria-roledescription="diapositiva" aria-label="2 de 2: Pawbound, Mascotas Inteligentes" inert>
+      <div class="stack" aria-hidden="true">
+        <img class="layer" data-depth="0.25" src="assets/paw-sky.jpg" alt="" width="2400" height="1350" loading="lazy">
+        <img class="layer" data-depth="0.6" src="assets/paw-forest.webp" alt="" width="2400" height="1350" loading="lazy">
+        <img class="layer" data-depth="1.5" id="pawLayer" src="assets/paw-friends.webp" alt="" width="2400" height="1350" loading="lazy">
+      </div>
+      <div class="hearts" id="hearts" aria-hidden="true"></div>
+      <div class="hero-copy">
+        <span class="new"><i></i>Nuevo addon</span>
+        <h1>Tu mundo merece<br><em>un compañero.</em></h1>
+        <p class="lead">Pawbound: Mascotas Inteligentes. Perros con personalidad propia que confían en vos, aprenden trucos, te defienden y se acuerdan de todo lo que vivieron juntos.</p>
+        <div class="actions">
+          <a class="btn btn-ember" href="./Pawbound_v1.0.0.mcaddon" download>Descargar Pawbound</a>
+          <a class="btn btn-ghost" href="#pawbound">Ver qué trae</a>
+        </div>
+        <p class="hero-meta">Versión 1.0.0 para Minecraft Bedrock 1.21.50 o superior. Pesa 147 KB.</p>
+      </div>
+      <div class="bubble paw" id="bubblePaw" role="status" aria-live="polite"></div>
+      <p class="hint"><i></i>Tocá a los perros</p>
+    </section>
+
+    <div class="switch" role="tablist" aria-label="Elegí un addon">
+      <button class="sw" role="tab" type="button" aria-selected="true" aria-controls="slideTeo" data-go="0" aria-label="Teo: Los Cinco Días"><img src="assets/teo-escena.jpg" alt="" width="56" height="36"><span>Teo<small>Los Cinco Días</small></span><i class="fill"></i></button>
+      <button class="sw" role="tab" type="button" aria-selected="false" aria-controls="slidePaw" data-go="1" tabindex="-1" aria-label="Pawbound: Mascotas Inteligentes"><img src="assets/pawbound-escena.jpg" alt="" width="56" height="36"><span>Pawbound<small>Mascotas Inteligentes</small></span><i class="fill"></i></button>
+      <button class="pause" id="pause" type="button" aria-label="Pausar el cambio automático"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="3" y="2" width="3.5" height="12" rx="1"/><rect x="9.5" y="2" width="3.5" height="12" rx="1"/></svg></button>
+    </div>
   </div>
 
   <!-- ===== ADDONS ===== -->
@@ -324,7 +447,7 @@ footer p+p{margin-top:6px;font-size:13px;color:#6f6590}
     <div class="wrap">
       <div class="head rv">
         <h2>Nuestros addons</h2>
-        <p class="sub">Cada addon de FLUX es una historia completa con personajes, reglas y un final.</p>
+        <p class="sub">Cada addon de FLUX trae personajes propios y mecánicas pensadas para jugar de verdad, solo o con amigos.</p>
       </div>
       <div class="addons">
         <article class="card addon-main rv">
@@ -339,15 +462,34 @@ footer p+p{margin-top:6px;font-size:13px;color:#6f6590}
             <div class="row">
               <a class="btn btn-ember btn-small" href="./TEO_Los_Cinco_Dias_v1.0.0.mcaddon" download>Descargar</a>
               <a class="btn btn-ghost btn-small" href="#teo">Ver detalles</a>
-              <button class="btn btn-ghost btn-small" id="share" type="button">Compartir</button>
+              <button class="btn btn-ghost btn-small" type="button" data-share="teo">Compartir</button>
+            </div>
+          </div>
+        </article>
+
+        <article class="card addon-main paw-card rv">
+          <div class="cover">
+            <span class="badge new-badge">Nuevo</span>
+            <img src="assets/pawbound-escena.jpg" alt="Un jugador tira una pelota mientras cuatro perros cúbicos juegan, reciben una galletita, dan la pata y duermen en su camita, al atardecer" width="1280" height="720" loading="lazy">
+          </div>
+          <div class="addon-body">
+            <h3>Pawbound: Mascotas Inteligentes</h3>
+            <p>Perros con personalidad, confianza y memoria. Juegan a la pelota, aprenden trucos, duermen en su camita y te defienden cuando más confían en vos.</p>
+            <div class="chips"><span class="chip">Mascotas</span><span class="chip">5 personalidades</span><span class="chip">4 razas</span><span class="chip">Accesorios</span></div>
+            <div class="row">
+              <a class="btn btn-ember btn-small" href="./Pawbound_v1.0.0.mcaddon" download>Descargar</a>
+              <a class="btn btn-ghost btn-small" href="#pawbound">Ver detalles</a>
+              <button class="btn btn-ghost btn-small" type="button" data-share="pawbound">Compartir</button>
             </div>
           </div>
         </article>
 
         <article class="card soon rv">
           <svg class="bolt" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 2 5 13.2h5.2L9 22l9.5-12.2h-5.4z"/></svg>
-          <h3>El próximo addon</h3>
-          <p>Estamos preparando una nueva creación. Cuando esté lista, la vas a encontrar acá.</p>
+          <div>
+            <h3>El próximo addon</h3>
+            <p>Estamos preparando una nueva creación. Cuando esté lista, la vas a encontrar acá.</p>
+          </div>
         </article>
       </div>
     </div>
@@ -402,13 +544,13 @@ footer p+p{margin-top:6px;font-size:13px;color:#6f6590}
       </div>
 
       <div class="panel" id="p-inst" role="tabpanel" aria-labelledby="t-inst" hidden>
-        <ol class="steps" id="steps">
+        <ol class="steps" data-steps="teo">
           <li><button class="step" type="button" aria-pressed="false"><span class="box"></span><span><strong>Descargá el archivo</strong><span class="d">Es un solo archivo .mcaddon con los dos packs adentro.</span></span></button></li>
           <li><button class="step" type="button" aria-pressed="false"><span class="box"></span><span><strong>Abrilo con Minecraft</strong><span class="d">En Windows, doble clic. En celular, tocá el archivo y elegí Minecraft. El juego lo importa solo.</span></span></button></li>
           <li><button class="step" type="button" aria-pressed="false"><span class="box"></span><span><strong>Creá un mundo y activá los packs</strong><span class="d">En Complementos, activá TEO: Los Cinco Días en el pack de comportamiento y en el de recursos.</span></span></button></li>
           <li><button class="step" type="button" aria-pressed="false"><span class="box"></span><span><strong>Entrá y rompé un tronco</strong><span class="d">Con el primer tronco roto aparece Teo y empieza la historia.</span></span></button></li>
         </ol>
-        <div class="prog"><div class="bar2" aria-hidden="true"><i id="barFill"></i></div><span id="progText">0 de 4 pasos</span></div>
+        <div class="prog"><div class="bar2" aria-hidden="true"><i class="fill"></i></div><span class="ptext">0 de 4 pasos</span></div>
       </div>
 
       <div class="panel" id="p-req" role="tabpanel" aria-labelledby="t-req" hidden>
@@ -422,15 +564,97 @@ footer p+p{margin-top:6px;font-size:13px;color:#6f6590}
     </div>
   </section>
 
+  <!-- ===== DETALLE DE PAWBOUND ===== -->
+  <section class="block paw-sec" id="pawbound">
+    <div class="wrap">
+      <div class="head rv">
+        <h2>Qué trae Pawbound</h2>
+        <p class="sub">Domesticá un perro con una galletita y empezá a conocerlo. Cada uno es distinto, y cuanto más tiempo pasan juntos, más confía en vos.</p>
+      </div>
+
+      <div class="tabs" role="tablist" aria-label="Detalles de Pawbound">
+        <button class="tab" role="tab" id="pt-pers" aria-controls="pp-pers" aria-selected="true">Personalidades</button>
+        <button class="tab" role="tab" id="pt-conf" aria-controls="pp-conf" aria-selected="false" tabindex="-1">Confianza</button>
+        <button class="tab" role="tab" id="pt-obj" aria-controls="pp-obj" aria-selected="false" tabindex="-1">Objetos</button>
+        <button class="tab" role="tab" id="pt-inst" aria-controls="pp-inst" aria-selected="false" tabindex="-1">Instalación</button>
+        <button class="tab" role="tab" id="pt-req" aria-controls="pp-req" aria-selected="false" tabindex="-1">Requisitos</button>
+      </div>
+
+      <div class="panel" id="pp-pers" role="tabpanel" aria-labelledby="pt-pers">
+        <div class="pers" id="pers" role="tablist" aria-label="Elegí una personalidad"></div>
+        <div class="per-detail" id="perDetail" aria-live="polite"></div>
+      </div>
+
+      <div class="panel" id="pp-conf" role="tabpanel" aria-labelledby="pt-conf" hidden>
+        <div class="meter">
+          <div class="track" aria-hidden="true"><i id="trustFill"></i></div>
+          <div class="lvls" id="lvls" role="tablist" aria-label="Niveles de confianza"></div>
+        </div>
+        <div class="slot d" id="lvlDetail" aria-live="polite"></div>
+        <div class="updown">
+          <div class="slot d"><h4><span class="dot" style="background:#7be0a4;box-shadow:0 0 12px #7be0a4"></span>Sube cuando...</h4>
+            <ul class="ticks" style="--c:#7be0a4">
+              <li>Lo acariciás o le das de comer, más todavía si tiene hambre.</li>
+              <li>Descubrís su comida favorita. Cada perro tiene una, y es secreta.</li>
+              <li>Juegan a la pelota o le enseñás un truco.</li>
+              <li>Simplemente pasan tiempo cerca.</li>
+            </ul>
+          </div>
+          <div class="slot n down"><h4><span class="dot" style="background:#ff6b6b;box-shadow:0 0 12px #ff6b6b"></span>Baja cuando...</h4>
+            <ul class="ticks">
+              <li>Le pegás. No entiende por qué, y lo recuerda.</li>
+              <li>Lo dejás pasar hambre.</li>
+              <li>Te vas mucho tiempo y todavía no te tiene confianza. Si ya te quiere, te festeja cuando volvés.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel" id="pp-obj" role="tabpanel" aria-labelledby="pt-obj" hidden>
+        <div class="items">
+          <div class="item"><img src="assets/paw-items/treat.png" alt="" width="64" height="64"><div><h4>Galletita para mascotas</h4><p>Sirve para domesticar, alimentar y enseñar trucos.</p><span class="rec">Hueso + trigo = 3</span></div></div>
+          <div class="item"><img src="assets/paw-items/ball.png" alt="" width="64" height="64"><div><h4>Pelota de juguete</h4><p>Tirala y tu perro corre a buscarla y te la trae. Pegale a la pelota del piso para recuperarla.</p><span class="rec">Bola de slime + lana = 2</span></div></div>
+          <div class="item"><img src="assets/paw-items/whistle.png" alt="" width="64" height="64"><div><h4>Silbato</h4><p>Llama a todos tus perros. Agachado, los sienta a todos o hace que te sigan.</p><span class="rec">Lingote de hierro + cuerda</span></div></div>
+          <div class="item"><img src="assets/paw-items/bed.png" alt="" width="64" height="64"><div><h4>Camita</h4><p>Cuando lo mandás a dormir, busca la camita más cercana. Ahí descansa el doble.</p><span class="rec">3 lanas arriba + 3 tablones abajo</span></div></div>
+          <div class="item"><img src="assets/paw-items/bandana.png" alt="" width="64" height="64"><div><h4>Pañuelo, moño y gorrito</h4><p>Interactuá con tu perro sosteniendo el accesorio para ponérselo. Se lo sacás desde su menú.</p><span class="rec">Lana roja + cuerda · tinte rosa + 2 cuerdas · papel + tinte azul + tinte amarillo</span></div></div>
+          <div class="item"><img src="assets/paw-items/dye.png" alt="" width="64" height="64"><div><h4>Collar de colores</h4><p>Usá cualquier tinte sobre tu perro para cambiarle el color del collar. Hay 16.</p><span class="rec">Cualquier tinte</span></div></div>
+        </div>
+      </div>
+
+      <div class="panel" id="pp-inst" role="tabpanel" aria-labelledby="pt-inst" hidden>
+        <ol class="steps" data-steps="pawbound">
+          <li><button class="step" type="button" aria-pressed="false"><span class="box"></span><span><strong>Descargá el archivo</strong><span class="d">Es un solo archivo .mcaddon con los dos packs adentro.</span></span></button></li>
+          <li><button class="step" type="button" aria-pressed="false"><span class="box"></span><span><strong>Abrilo con Minecraft</strong><span class="d">En Windows, doble clic. En celular, tocá el archivo y elegí Minecraft. El juego lo importa solo.</span></span></button></li>
+          <li><button class="step" type="button" aria-pressed="false"><span class="box"></span><span><strong>Activá los dos packs en tu mundo</strong><span class="d">En Complementos, activá Pawbound en el pack de comportamiento y en el de recursos.</span></span></button></li>
+          <li><button class="step" type="button" aria-pressed="false"><span class="box"></span><span><strong>Buscá un perro y dale una galletita</strong><span class="d">Aparecen en llanuras, bosques, taigas y sabanas. También podés usar el huevo generador.</span></span></button></li>
+        </ol>
+        <div class="prog"><div class="bar2" aria-hidden="true"><i class="fill"></i></div><span class="ptext">0 de 4 pasos</span></div>
+      </div>
+
+      <div class="panel" id="pp-req" role="tabpanel" aria-labelledby="pt-req" hidden>
+        <div class="reqs">
+          <div class="req"><b>1.21.50+</b><span>Versión mínima de Minecraft Bedrock.</span></div>
+          <div class="req"><b>147 KB</b><span>Lo que pesa el archivo .mcaddon.</span></div>
+          <div class="req"><b>1.0.0</b><span>Primera versión pública del addon.</span></div>
+          <div class="req"><b>Español</b><span>Menús, mensajes y recuerdos de tu mascota en español rioplatense.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ===== RESEÑAS ===== -->
   <section class="block" id="resenas">
     <div class="wrap">
       <div class="head rv">
         <h2>Reseñas</h2>
-        <p class="sub">Contá cómo te fue con Teo. ¿Llegaste al día cinco?</p>
+        <p class="sub" id="revSub">Contá cómo te fue con Teo. ¿Llegaste al día cinco?</p>
       </div>
       <div class="reviews">
         <form class="card form rv" id="revForm" novalidate>
+          <div class="revpick" role="group" aria-label="Elegí el addon que querés reseñar">
+            <button type="button" data-rev="teo" aria-pressed="true">Teo</button>
+            <button type="button" data-rev="pawbound" aria-pressed="false">Pawbound</button>
+          </div>
           <div class="avg" aria-live="polite"><b id="avgNum">–</b><div><div class="stars mini" id="avgStars" aria-hidden="true"></div><span class="t" id="avgText">Todavía no hay reseñas</span></div></div>
           <div>
             <label id="ratingLabel">Tu puntaje</label>
@@ -452,12 +676,20 @@ footer p+p{margin-top:6px;font-size:13px;color:#6f6590}
     <div class="wrap">
       <div class="head rv"><h2>Preguntas frecuentes</h2></div>
       <div class="faq rv">
+        <h3>Teo: Los Cinco Días</h3>
         <details><summary>¿Teo puede morir?</summary><p>No. Nada le hace daño, ni siquiera tus golpes. Lo único que termina la partida es que Ginno lo agarre y se acabe el tiempo para hacer que lo suelte.</p></details>
         <details><summary>¿Qué hago si Ginno agarra a Teo?</summary><p>Pegale a Ginno hasta que lo suelte. Después queda aturdido unos segundos, Teo sale corriendo y Ginno lo persigue. Si no lo soltás a tiempo, perdés.</p></details>
         <details><summary>¿Cómo evito que rompa mi refugio?</summary><p>Ginno rompe madera, tierra y vidrio desde la noche 3, y piedra y ladrillos desde la 4. Los bloques pesados lo frenan. Construí con ellos.</p></details>
         <details><summary>¿Para qué sirve el Hueso de Teo?</summary><p>Es el arma que Teo te da al amanecer del día cinco, para la pelea contra el jefe final.</p></details>
         <details><summary>¿Cómo empiezo de nuevo?</summary><p>Creá un mundo nuevo con el addon activado. La historia queda guardada en cada mundo.</p></details>
         <details><summary>¿Puedo jugarlo con amigos?</summary><p>Fue pensado para jugar en cooperativo: el progreso de la historia es compartido entre todos los jugadores del mundo.</p></details>
+        <h3>Pawbound</h3>
+        <details><summary>¿Cómo consigo un perro?</summary><p>Aparecen solos en llanuras, bosques, taigas y sabanas. Dale una Galletita para mascotas (hueso + trigo) o un hueso hasta que aparezcan los corazones. También podés usar el huevo generador en creativo.</p></details>
+        <details><summary>¿Cómo sé qué personalidad tiene?</summary><p>Te lo dice apenas lo domesticás. Después la ves siempre en su menú: interactuá con tu perro y aparecen su personalidad, su confianza, su hambre, su energía y sus ganas de jugar.</p></details>
+        <details><summary>¿Cómo le enseño trucos?</summary><p>Abrí su menú, entrá en Trucos y elegí uno. Cada lección usa una galletita. Los trucos más difíciles necesitan más confianza: dar la pata pide 20, rodar 50 y hacerse el muerto 70.</p></details>
+        <details><summary>¿Qué recuerda mi perro?</summary><p>Los momentos importantes: el día que se conocieron, su primera pelota, la primera vez que te defendió, cuándo descubriste su comida favorita y más. Están en Recuerdos y estado, dentro de su menú.</p></details>
+        <details><summary>¿Mi perro me defiende?</summary><p>Sí, cuando confía lo suficiente. Desde confianza 50 ataca a quien te pegue y desde 75 va contra los monstruos que se acercan. Los protectores lo hacen antes. Con confianza 100, si estás muy herido, se queda a tu lado y te cura.</p></details>
+        <details><summary>¿Puedo tener varios perros?</summary><p>Sí, todos los que quieras. Con el silbato los llamás a todos juntos, y agachado los hacés sentar o seguirte.</p></details>
       </div>
     </div>
   </section>
@@ -468,7 +700,7 @@ footer p+p{margin-top:6px;font-size:13px;color:#6f6590}
       <div class="rv">
         <h2>¿Qué es FLUX?</h2>
         <p>FLUX es un estudio independiente que crea addons y experiencias para Minecraft Bedrock. Cada proyecto empieza con una idea y termina siendo una aventura completa, con su historia, sus personajes y su final.</p>
-        <p>Teo: Los Cinco Días es el primero. Vienen más.</p>
+        <p>Teo: Los Cinco Días fue el primero y Pawbound: Mascotas Inteligentes, el segundo. Vienen más.</p>
       </div>
       <div class="glyph rv" aria-hidden="true"><div class="diamond big"><span>F</span></div></div>
     </div>
@@ -537,9 +769,78 @@ footer p+p{margin-top:6px;font-size:13px;color:#6f6590}
   sizeStars(); addEventListener('resize', sizeStars);
   if (!reduce) requestAnimationFrame(drawStars);
 
+  /* ---------- hero: banner rotativo ---------- */
+  const hero = $('.hero');
+  const slides = $$('.slide', hero), switches = $$('.sw', hero), pauseBtn = $('#pause');
+  const navCta = $('#navCta');
+  const CTA = [
+    { href: './TEO_Los_Cinco_Dias_v1.0.0.mcaddon', text: 'Descargar Teo' },
+    { href: './Pawbound_v1.0.0.mcaddon', text: 'Descargar Pawbound' }
+  ];
+  const DURATION = 9000;
+  let current = 0, elapsed = 0, last = performance.now(), paused = reduce, hoverHold = false, focusHold = false;
+  let heroVisible = true;
+
+  function go(i, focus) {
+    current = (i + slides.length) % slides.length; elapsed = 0;
+    slides.forEach((s, k) => {
+      const on = k === current;
+      s.classList.toggle('on', on);
+      if (on) s.removeAttribute('inert'); else s.setAttribute('inert', '');
+      s.setAttribute('aria-hidden', !on);
+      if (on) $$('img[loading="lazy"]', s).forEach(im => im.loading = 'eager');
+    });
+    switches.forEach((b, k) => {
+      const on = k === current;
+      b.setAttribute('aria-selected', on); b.tabIndex = on ? 0 : -1;
+      $('.fill', b).style.width = '0';
+    });
+    navCta.href = CTA[current].href; navCta.textContent = CTA[current].text;
+    $$('.bubble.show', hero).forEach(b => b.classList.remove('show'));
+    if (focus) switches[current].focus();
+  }
+  switches.forEach((b, i) => {
+    b.addEventListener('click', () => go(i));
+    b.addEventListener('keydown', e => {
+      let j = null;
+      if (e.key === 'ArrowRight') j = i + 1; else if (e.key === 'ArrowLeft') j = i - 1;
+      if (j !== null) { e.preventDefault(); go(j, true); }
+    });
+  });
+  function paintPause() {
+    pauseBtn.setAttribute('aria-label', paused ? 'Reanudar el cambio automático' : 'Pausar el cambio automático');
+    pauseBtn.innerHTML = paused
+      ? '<svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M4 2.5v11a1 1 0 0 0 1.5.86l9-5.5a1 1 0 0 0 0-1.72l-9-5.5A1 1 0 0 0 4 2.5z"/></svg>'
+      : '<svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><rect x="3" y="2" width="3.5" height="12" rx="1"/><rect x="9.5" y="2" width="3.5" height="12" rx="1"/></svg>';
+  }
+  pauseBtn.addEventListener('click', () => { paused = !paused; paintPause(); });
+  paintPause();
+  hero.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') hoverHold = true; });
+  hero.addEventListener('pointerleave', () => { hoverHold = false; });
+  hero.addEventListener('focusin', () => { focusHold = true; });
+  hero.addEventListener('focusout', () => { focusHold = false; });
+  function tickSlides(now) {
+    const dt = Math.min(now - last, 100); last = now;
+    if (!paused && !hoverHold && !focusHold && heroVisible && !document.hidden) {
+      elapsed += dt;
+      if (elapsed >= DURATION) go(current + 1);
+    }
+    $('.fill', switches[current]).style.width = Math.min(elapsed / DURATION * 100, 100) + '%';
+    requestAnimationFrame(tickSlides);
+  }
+  requestAnimationFrame(tickSlides);
+  // deslizar en el celular
+  let sx0 = null;
+  hero.addEventListener('touchstart', e => { sx0 = e.touches[0].clientX; }, { passive: true });
+  hero.addEventListener('touchend', e => {
+    if (sx0 === null) return;
+    const dx = e.changedTouches[0].clientX - sx0; sx0 = null;
+    if (Math.abs(dx) > 50) go(current + (dx < 0 ? 1 : -1));
+  });
+
   /* ---------- hero: parallax en capas ---------- */
-  const stack = $('#stack'), layers = $$('.layer', stack), hero = $('.hero');
-  let tx = 0, ty = 0, cxp = 0, cyp = 0, heroVisible = true, usedPointer = false;
+  const layers = $$('.layer', hero);
+  let tx = 0, ty = 0, cxp = 0, cyp = 0, usedPointer = false;
   hero.addEventListener('pointermove', e => {
     usedPointer = true; const r = hero.getBoundingClientRect();
     tx = ((e.clientX - r.left) / r.width - .5) * 2; ty = ((e.clientY - r.top) / r.height - .5) * 2;
@@ -562,12 +863,12 @@ footer p+p{margin-top:6px;font-size:13px;color:#6f6590}
 
   const flash = $('#flash');
   function lightning() {
-    if (!reduce && heroVisible) { flash.classList.remove('on'); void flash.offsetWidth; flash.classList.add('on'); }
+    if (!reduce && heroVisible && current === 0) { flash.classList.remove('on'); void flash.offsetWidth; flash.classList.add('on'); }
     setTimeout(lightning, 9000 + Math.random() * 9000);
   }
   if (!reduce) setTimeout(lightning, 4500);
 
-  /* ---------- hero: tocar a Teo o a Ginno ---------- */
+  /* ---------- hero: tocar a los personajes ---------- */
   const TEO_LINES = [
     '¡Ey! Soy chiquito y bien educado, no se pega.',
     'Cuidado con las manos, que soy de cristal.',
@@ -582,81 +883,142 @@ footer p+p{margin-top:6px;font-size:13px;color:#6f6590}
     'No podés esconderte.',
     'Tengo el encendedor, Teo... y todo el tiempo del mundo.'
   ];
+  // personajes de Pawbound, ordenados de izquierda a derecha en la imagen (fracción del ancho)
+  const PAW = [
+    { to: .51, name: 'Carbón · Protector', lines: ['¡Mirá, te doy la pata! Me costó tres galletitas aprenderlo.', 'Con este gorrito igual te cuido, ¿eh?', 'Si se acerca un zombi, yo me encargo.'] },
+    { to: .612, name: 'Dorado · Cariñoso', lines: ['¿Eso es una galletita? ¿Es para mí? ¡Te quiero!', 'Rascame atrás de la oreja, porfa.', 'Te extrañé un montón, y eso que te fuiste dos minutos.'] },
+    { to: .735, name: 'Vos', lines: ['Cada uno tiene su personalidad. Y se acuerdan de todo.', 'Galletita para uno, pelota para el otro...', 'Un silbatazo y vienen todos corriendo.'] },
+    { to: .845, name: 'Canela · Juguetona', lines: ['¡Tirala otra vez! ¡Otra vez! ¡OTRA VEZ!', '¡La tengo! ¡La tengo! ¡Casi la tengo!', 'Ya aprendí a rodar. ¿Querés ver?'] },
+    { to: 1, name: 'Manchado · Dormilón', lines: ['Zzz... cinco minutitos más...', 'En la camita se duerme el doble de bien.', 'Despertame cuando haya galletitas.'] }
+  ];
   const LINES = { teo: TEO_LINES, ginno: GINNO_LINES };
-  const lastIdx = { teo: -1, ginno: -1 };
-  const nextLine = (who) => {
-    const arr = LINES[who]; let i;
-    do { i = Math.floor(Math.random() * arr.length); } while (i === lastIdx[who]);
-    lastIdx[who] = i; return arr[i];
-  };
-  const objPos = () => {
-    const p = getComputedStyle($('#teoLayer')).objectPosition.split(' ').map(parseFloat);
-    return [p[0] / 100, p[1] / 100];
+  const lastIdx = {};
+  const nextLine = (key, arr) => {
+    let i;
+    do { i = Math.floor(Math.random() * arr.length); } while (arr.length > 1 && i === lastIdx[key]);
+    lastIdx[key] = i; return arr[i];
   };
   function makeHit(img) {
     const c = document.createElement('canvas'); let ctx = null;
     const load = () => { c.width = img.naturalWidth; c.height = img.naturalHeight; ctx = c.getContext('2d', { willReadFrequently: true }); ctx.drawImage(img, 0, 0); };
     if (img.complete && img.naturalWidth) load(); else img.addEventListener('load', load, { once: true });
     return (px, py) => {
-      if (!ctx) return false;
-      const r = img.getBoundingClientRect(), nw = img.naturalWidth, nh = img.naturalHeight, [fx, fy] = objPos();
+      if (!ctx) return null;
+      const r = img.getBoundingClientRect(), nw = img.naturalWidth, nh = img.naturalHeight;
+      const p = getComputedStyle(img).objectPosition.split(' ').map(parseFloat), fx = p[0] / 100, fy = p[1] / 100;
       const s = Math.max(r.width / nw, r.height / nh);
       const ix = Math.round((px - r.left - (r.width - nw * s) * fx) / s), iy = Math.round((py - r.top - (r.height - nh * s) * fy) / s);
-      if (ix < 4 || iy < 4 || ix >= nw - 4 || iy >= nh - 4) return false;
+      if (ix < 4 || iy < 4 || ix >= nw - 4 || iy >= nh - 4) return null;
       try {
         const d = ctx.getImageData(ix - 3, iy - 3, 7, 7).data;
-        for (let i = 3; i < d.length; i += 4) if (d[i] > 100) return true;
-      } catch { return false; }
-      return false;
+        for (let i = 3; i < d.length; i += 4) if (d[i] > 100) return ix / nw;
+      } catch { return null; }
+      return null;
     };
   }
-  const hitTeo = makeHit($('#teoLayer')), hitGinno = makeHit($('#ginnoLayer'));
-  const bubbles = { teo: $('#bubbleTeo'), ginno: $('#bubbleGinno') };
+  const hitTeo = makeHit($('#teoLayer')), hitGinno = makeHit($('#ginnoLayer')), hitPaw = makeHit($('#pawLayer'));
+  const bubbles = { teo: $('#bubbleTeo'), ginno: $('#bubbleGinno'), paw: $('#bubblePaw') };
   const timers = {};
-  function speak(who, x, y) {
-    const b = bubbles[who], hr = hero.getBoundingClientRect();
-    b.innerHTML = `<b>${who === 'teo' ? 'Teo' : 'Ginno'}</b>${nextLine(who)}`;
+  function place(b, x, y) {
+    const hr = hero.getBoundingClientRect();
     const left = Math.min(Math.max(x - hr.left - 20, 12), hr.width - 252);
     b.style.left = left + 'px'; b.style.top = Math.max(y - hr.top - 90, 80) + 'px';
-    b.classList.add('show'); clearTimeout(timers[who]); timers[who] = setTimeout(() => b.classList.remove('show'), 3200);
+  }
+  function show(key, title, text, x, y) {
+    const b = bubbles[key];
+    b.innerHTML = ''; const t = document.createElement('b'); t.textContent = title; b.append(t, text);
+    place(b, x, y);
+    b.classList.add('show'); clearTimeout(timers[key]); timers[key] = setTimeout(() => b.classList.remove('show'), 3400);
+  }
+  const heartsEl = $('#hearts');
+  function burstHearts(x, y) {
+    if (reduce) return;
+    const hr = hero.getBoundingClientRect();
+    for (let i = 0; i < 5; i++) {
+      const h = document.createElement('span');
+      h.style.left = (x - hr.left - 9 + (Math.random() - .5) * 60) + 'px';
+      h.style.top = (y - hr.top - 20 + (Math.random() - .5) * 30) + 'px';
+      h.style.animationDelay = (i * 90) + 'ms';
+      heartsEl.appendChild(h); setTimeout(() => h.remove(), 2000 + i * 90);
+    }
+  }
+  function charAt(x, y) {
+    if (current === 0) {
+      if (hitTeo(x, y) !== null) return 'teo';
+      if (hitGinno(x, y) !== null) return 'ginno';
+    } else {
+      const f = hitPaw(x, y);
+      if (f !== null) return PAW.find(p => f <= p.to);
+    }
+    return null;
   }
   hero.addEventListener('click', e => {
     if (e.target.closest('a,button')) return;
-    if (hitTeo(e.clientX, e.clientY)) speak('teo', e.clientX, e.clientY);
-    else if (hitGinno(e.clientX, e.clientY)) speak('ginno', e.clientX, e.clientY);
+    const who = charAt(e.clientX, e.clientY);
+    if (!who) return;
+    if (typeof who === 'string') show(who, who === 'teo' ? 'Teo' : 'Ginno', nextLine(who, LINES[who]), e.clientX, e.clientY);
+    else { show('paw', who.name, nextLine(who.name, who.lines), e.clientX, e.clientY); burstHearts(e.clientX, e.clientY); }
   });
   hero.addEventListener('pointermove', e => {
     if (e.pointerType !== 'mouse') return;
-    hero.style.cursor = (hitTeo(e.clientX, e.clientY) || hitGinno(e.clientX, e.clientY)) ? 'pointer' : '';
+    hero.style.cursor = (!e.target.closest('a,button') && charAt(e.clientX, e.clientY)) ? 'pointer' : '';
   });
 
   /* ---------- compartir ---------- */
-  $('#share').addEventListener('click', async (e) => {
-    const btn = e.currentTarget, data = { title: 'Teo: Los Cinco Días', text: 'Addon de Minecraft Bedrock de FLUX', url: location.href.split('#')[0] };
+  const SHARE = {
+    teo: { title: 'Teo: Los Cinco Días', text: 'Addon de Minecraft Bedrock de FLUX', hash: '#teo' },
+    pawbound: { title: 'Pawbound: Mascotas Inteligentes', text: 'Perros con personalidad para Minecraft Bedrock, de FLUX', hash: '#pawbound' }
+  };
+  $$('[data-share]').forEach(btn => btn.addEventListener('click', async () => {
+    const s = SHARE[btn.dataset.share], data = { title: s.title, text: s.text, url: location.href.split('#')[0] + s.hash };
     try {
       if (navigator.share) await navigator.share(data);
       else { await navigator.clipboard.writeText(data.url); btn.textContent = 'Enlace copiado'; setTimeout(() => btn.textContent = 'Compartir', 1800); }
     } catch {}
+  }));
+
+  /* ---------- pestañas (cada sección tiene las suyas) ---------- */
+  $$('.tabs[role="tablist"]').forEach(list => {
+    const tabs = $$('.tab', list);
+    function selectTab(t, focus) {
+      tabs.forEach(x => {
+        const on = x === t; x.setAttribute('aria-selected', on); x.tabIndex = on ? 0 : -1;
+        $('#' + x.getAttribute('aria-controls')).hidden = !on;
+      });
+      if (focus) t.focus();
+    }
+    tabs.forEach((t, i) => {
+      t.addEventListener('click', () => selectTab(t));
+      t.addEventListener('keydown', e => {
+        let j = null;
+        if (e.key === 'ArrowRight') j = (i + 1) % tabs.length; else if (e.key === 'ArrowLeft') j = (i - 1 + tabs.length) % tabs.length;
+        else if (e.key === 'Home') j = 0; else if (e.key === 'End') j = tabs.length - 1;
+        if (j !== null) { e.preventDefault(); selectTab(tabs[j], true); }
+      });
+    });
   });
 
-  /* ---------- pestañas ---------- */
-  const tabs = $$('.tab');
-  function selectTab(t, focus) {
-    tabs.forEach(x => {
-      const on = x === t; x.setAttribute('aria-selected', on); x.tabIndex = on ? 0 : -1;
-      $('#' + x.getAttribute('aria-controls')).hidden = !on;
+  /* selector genérico (días, personalidades, niveles) */
+  function picker(container, items, cls, label, onShow) {
+    items.forEach((it, i) => {
+      const b = document.createElement('button');
+      b.className = cls; b.type = 'button'; b.setAttribute('role', 'tab');
+      b.innerHTML = label(it, i);
+      if (it.c) b.style.setProperty('--c', it.c);
+      b.addEventListener('click', () => pick(i));
+      b.addEventListener('keydown', e => {
+        let j = null;
+        if (e.key === 'ArrowRight') j = Math.min(i + 1, items.length - 1); else if (e.key === 'ArrowLeft') j = Math.max(i - 1, 0);
+        if (j !== null) { e.preventDefault(); pick(j); container.children[j].focus(); }
+      });
+      container.appendChild(b);
     });
-    if (focus) t.focus();
+    function pick(i) {
+      [...container.children].forEach((b, k) => { b.setAttribute('aria-selected', k === i); b.tabIndex = k === i ? 0 : -1; });
+      onShow(items[i], i);
+    }
+    pick(0);
   }
-  tabs.forEach((t, i) => {
-    t.addEventListener('click', () => selectTab(t));
-    t.addEventListener('keydown', e => {
-      let j = null;
-      if (e.key === 'ArrowRight') j = (i + 1) % tabs.length; else if (e.key === 'ArrowLeft') j = (i - 1 + tabs.length) % tabs.length;
-      else if (e.key === 'Home') j = 0; else if (e.key === 'End') j = tabs.length - 1;
-      if (j !== null) { e.preventDefault(); selectTab(tabs[j], true); }
-    });
-  });
 
   /* ---------- los cinco días ---------- */
   const DAYS = [
@@ -671,53 +1033,84 @@ footer p+p{margin-top:6px;font-size:13px;color:#6f6590}
     { t: 'El jefe', d: 'Al amanecer, Teo te entrega el Hueso de Teo: un arma hecha para esta noche.',
       n: 'Llega el jefe final, con 3000 de vida y tres fases. Si acabás con él, ganás. Si agarra a Teo y no lo soltás a tiempo, perdés.' }
   ];
-  const daysEl = $('#days'), detail = $('#dayDetail'), boss = $('#boss');
-  DAYS.forEach((d, i) => {
-    const b = document.createElement('button');
-    b.className = 'day'; b.type = 'button'; b.setAttribute('role', 'tab'); b.id = 'day' + (i + 1);
-    b.innerHTML = `<span class="n">${i + 1}</span><span class="t">${d.t}</span>`;
-    b.addEventListener('click', () => showDay(i));
-    b.addEventListener('keydown', e => {
-      let j = null;
-      if (e.key === 'ArrowRight') j = Math.min(i + 1, 4); else if (e.key === 'ArrowLeft') j = Math.max(i - 1, 0);
-      if (j !== null) { e.preventDefault(); showDay(j); $('#day' + (j + 1)).focus(); }
-    });
-    daysEl.appendChild(b);
-  });
-  function showDay(i) {
-    $$('.day', daysEl).forEach((b, k) => { b.setAttribute('aria-selected', k === i); b.tabIndex = k === i ? 0 : -1; });
-    const d = DAYS[i];
+  const detail = $('#dayDetail'), boss = $('#boss');
+  picker($('#days'), DAYS, 'day', (d, i) => `<span class="n">${i + 1}</span><span class="t">${d.t}</span>`, (d, i) => {
     detail.innerHTML = `<div class="slot d"><h4><span class="dot"></span>Día ${i + 1}</h4><p></p></div><div class="slot n"><h4><span class="dot m"></span>Noche ${i + 1}</h4><p></p></div>`;
     const ps = $$('p', detail); ps[0].textContent = d.d; ps[1].textContent = d.n;
     boss.hidden = i !== 4;
-  }
-  showDay(0);
+  });
 
-  /* ---------- personajes que hablan ---------- */
-  const sayIdx = { teo: -1, ginno: -1 };
+  /* ---------- personajes que hablan (Teo) ---------- */
   $$('[data-talk]').forEach(b => b.addEventListener('click', () => {
-    const who = b.dataset.talk, arr = LINES[who]; let i;
-    do { i = Math.floor(Math.random() * arr.length); } while (i === sayIdx[who]);
-    sayIdx[who] = i; $(who === 'teo' ? '#sayTeo' : '#sayGinno').textContent = arr[i];
+    const who = b.dataset.talk;
+    $(who === 'teo' ? '#sayTeo' : '#sayGinno').textContent = nextLine('say-' + who, LINES[who]);
   }));
+
+  /* ---------- Pawbound: personalidades ---------- */
+  const PERS = [
+    { n: 'Juguetón', t: 'Vive para la pelota', c: '#ffd66b',
+      d: 'Ama la pelota y aprende los trucos en menos lecciones. Si se aburre, salta alrededor tuyo para pedirte que juegues.',
+      l: ['Gana más confianza cuando juegan a la pelota.', 'Aprende cada truco en 2 lecciones en lugar de 3.', 'Cuando está contento, se persigue la cola.'] },
+    { n: 'Protector', t: 'Siempre alerta', c: '#ff7a6b',
+      d: 'Te cuida antes que nadie. Empieza a defenderte con menos confianza y te avisa con un gruñido si hay monstruos cerca.',
+      l: ['Te defiende desde confianza 25. El resto, desde 50.', 'Ataca a los monstruos cercanos desde confianza 50.', 'En las tormentas, le ladra a los truenos.'] },
+    { n: 'Dormilón', t: 'Fiaca profesional', c: '#8fb3ff',
+      d: 'Tranquilo y fiaca. Recupera energía más rápido y, si lo dejás sentado de noche, se duerme solo.',
+      l: ['Recupera energía un 50% más rápido mientras duerme.', 'Si está cansado, a veces no quiere ir a buscar la pelota.', 'En la camita descansa el doble, como todos.'] },
+    { n: 'Cariñoso', t: 'Mimoso a full', c: '#ff8fc4',
+      d: 'Gana confianza un 50% más rápido y se te frota contra las piernas. Cuando volvés después de mucho tiempo, te festeja como nadie.',
+      l: ['Toda la confianza que gana vale un 50% más.', 'Se acerca solo a pedirte mimos.', 'Los reencuentros son los más emotivos.'] },
+    { n: 'Travieso', t: 'Algo trama', c: '#ffa458',
+      d: 'A veces desobedece y se come la galletita sin aprender el truco. Pero cada tanto escarba y desentierra tesoros, ¡hasta diamantes!',
+      l: ['Con poca confianza, a veces ignora tus órdenes.', 'Desentierra palitos, huesos, plumas, oro y, muy de vez en cuando, esmeraldas y diamantes.', 'Es el único que se come la carne podrida con gusto.'] }
+  ];
+  const perDetail = $('#perDetail');
+  picker($('#pers'), PERS, 'per', p => `<span class="n">${p.n}</span><span class="t">${p.t}</span>`, p => {
+    perDetail.style.setProperty('--c', p.c);
+    perDetail.innerHTML = `<div class="slot"><h4><span class="dot"></span></h4><p></p></div><div class="slot"><h4>Así se nota en el juego</h4><ul class="ticks"></ul></div>`;
+    $('h4', perDetail).append(p.n); $('p', perDetail).textContent = p.d;
+    const ul = $('ul', perDetail);
+    p.l.forEach(x => { const li = document.createElement('li'); li.textContent = x; ul.appendChild(li); });
+  });
+
+  /* ---------- Pawbound: confianza ---------- */
+  const LVLS = [
+    { v: 0, n: 'Desconfiado', p: 'Te sigue y se deja mimar, pero todavía te está conociendo. Si es travieso, a veces no te hace caso.' },
+    { v: 25, n: 'Amigable', p: 'Aprende sus primeros trucos: dar la pata (desde 20) y dar una vuelta (desde 30).' },
+    { v: 50, n: 'Leal', p: 'Te defiende: ataca a quien te pegue y a lo que vos ataques. Ya puede aprender a rodar.' },
+    { v: 75, n: 'Inseparable', p: 'Va solo contra los monstruos que se te acercan. Desde 70 aprende a hacerse el muerto.' },
+    { v: 100, n: 'Mejor amigo', p: 'Si estás muy herido, se queda a tu lado y te cura. No hay nada más leal que esto.' }
+  ];
+  const lvlDetail = $('#lvlDetail'), trustFill = $('#trustFill');
+  picker($('#lvls'), LVLS, 'lvl', l => `<b>${l.v}</b><span>${l.n}</span>`, l => {
+    trustFill.style.width = Math.max(l.v, 3) + '%';
+    lvlDetail.innerHTML = '<h4><span class="dot" style="background:#ff8fb4;box-shadow:0 0 12px #ff8fb4"></span></h4><p></p>';
+    $('h4', lvlDetail).append(`${l.n} · confianza ${l.v}`); $('p', lvlDetail).textContent = l.p;
+  });
 
   /* ---------- pasos de instalación ---------- */
-  const steps = $$('.step'), fill = $('#barFill'), pt = $('#progText');
-  const doneSteps = store.get('flux:steps', []);
-  function paintSteps() {
-    steps.forEach((s, i) => s.setAttribute('aria-pressed', doneSteps.includes(i)));
-    const n = doneSteps.length; fill.style.width = n / steps.length * 100 + '%';
-    pt.textContent = n === steps.length ? '¡Listo! Ya podés jugar.' : `${n} de ${steps.length} pasos`;
-  }
-  steps.forEach((s, i) => s.addEventListener('click', () => {
-    const k = doneSteps.indexOf(i); if (k >= 0) doneSteps.splice(k, 1); else doneSteps.push(i);
-    store.set('flux:steps', doneSteps); paintSteps();
-  }));
-  paintSteps();
+  $$('[data-steps]').forEach(ol => {
+    const key = ol.dataset.steps === 'teo' ? 'flux:steps' : 'flux:steps:' + ol.dataset.steps;
+    const steps = $$('.step', ol), box = ol.nextElementSibling, fill = $('.fill', box), pt = $('.ptext', box);
+    const done = store.get(key, []);
+    const paint = () => {
+      steps.forEach((s, i) => s.setAttribute('aria-pressed', done.includes(i)));
+      fill.style.width = done.length / steps.length * 100 + '%';
+      pt.textContent = done.length === steps.length ? '¡Listo! Ya podés jugar.' : `${done.length} de ${steps.length} pasos`;
+    };
+    steps.forEach((s, i) => s.addEventListener('click', () => {
+      const k = done.indexOf(i); if (k >= 0) done.splice(k, 1); else done.push(i);
+      store.set(key, done); paint();
+    }));
+    paint();
+  });
 
   /* ---------- reseñas ---------- */
-  const KEY = 'flux:reviews:teo';
-  let reviews = store.get(KEY, []), rating = 0;
+  const REV = {
+    teo: { key: 'flux:reviews:teo', sub: 'Contá cómo te fue con Teo. ¿Llegaste al día cinco?', ph: 'Qué te gustó, qué noche te costó más...', empty: 'Todavía no hay reseñas de Teo. Escribí la primera y contale a todos qué noche te costó más.' },
+    pawbound: { key: 'flux:reviews:pawbound', sub: 'Contá cómo es tu perro en Pawbound. ¿Qué personalidad te tocó?', ph: 'Cómo se llama, qué personalidad tiene, qué trucos aprendió...', empty: 'Todavía no hay reseñas de Pawbound. Contá qué personalidad le tocó a tu perro.' }
+  };
+  let revAddon = 'teo', reviews = store.get(REV.teo.key, []), rating = 0;
   const rate = $('#rate'), avgStars = $('#avgStars');
   const starHTML = (n) => Array.from({ length: 5 }, (_, i) => `<span class="star ${i < Math.round(n) ? 'on' : ''}">★</span>`).join('');
   for (let i = 1; i <= 5; i++) {
@@ -735,7 +1128,7 @@ footer p+p{margin-top:6px;font-size:13px;color:#6f6590}
   function renderReviews() {
     const list = $('#revList');
     if (!reviews.length) {
-      list.innerHTML = '<div class="card empty">Todavía no hay reseñas. Escribí la primera y contale a todos qué noche te costó más.</div>';
+      list.innerHTML = `<div class="card empty">${REV[revAddon].empty}</div>`;
       $('#avgNum').textContent = '–'; avgStars.innerHTML = starHTML(0); $('#avgText').textContent = 'Todavía no hay reseñas'; return;
     }
     const avg = reviews.reduce((a, r) => a + r.rating, 0) / reviews.length;
@@ -743,9 +1136,16 @@ footer p+p{margin-top:6px;font-size:13px;color:#6f6590}
     $('#avgText').textContent = reviews.length === 1 ? '1 reseña' : reviews.length + ' reseñas';
     list.innerHTML = reviews.map((r, i) => `<article class="card rev"><div class="top"><strong>${esc(r.name)}</strong><time>${esc(r.date)}</time></div><div class="stars mini" aria-label="${r.rating} de 5">${starHTML(r.rating)}</div><p>${esc(r.text)}</p><button class="del" type="button" data-i="${i}">Borrar</button></article>`).join('');
   }
+  $$('[data-rev]').forEach(b => b.addEventListener('click', () => {
+    revAddon = b.dataset.rev;
+    $$('[data-rev]').forEach(x => x.setAttribute('aria-pressed', x === b));
+    reviews = store.get(REV[revAddon].key, []);
+    $('#revSub').textContent = REV[revAddon].sub; $('#rText').placeholder = REV[revAddon].ph;
+    rating = 0; paintRate(); $('#rMsg').textContent = ''; renderReviews();
+  }));
   $('#revList').addEventListener('click', e => {
     const b = e.target.closest('.del'); if (!b) return;
-    reviews.splice(+b.dataset.i, 1); store.set(KEY, reviews); renderReviews();
+    reviews.splice(+b.dataset.i, 1); store.set(REV[revAddon].key, reviews); renderReviews();
   });
   $('#revForm').addEventListener('submit', e => {
     e.preventDefault();
@@ -755,7 +1155,7 @@ footer p+p{margin-top:6px;font-size:13px;color:#6f6590}
     if (!name) { msg.textContent = 'Escribí tu nombre.'; $('#rName').focus(); return; }
     if (text.length < 5) { msg.textContent = 'Contanos algo más en tu reseña.'; $('#rText').focus(); return; }
     reviews.unshift({ name, text, rating, date: new Date().toLocaleDateString('es-AR') });
-    store.set(KEY, reviews); renderReviews();
+    store.set(REV[revAddon].key, reviews); renderReviews();
     rating = 0; paintRate(); $('#rText').value = '';
     msg.style.color = '#7be0a4'; msg.textContent = 'Reseña publicada. Gracias.';
     setTimeout(() => { msg.textContent = ''; msg.style.color = ''; }, 2600);
@@ -765,6 +1165,10 @@ footer p+p{margin-top:6px;font-size:13px;color:#6f6590}
   /* ---------- aparición al hacer scroll ---------- */
   const io = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } }), { threshold: .12 });
   $$('.rv').forEach(el => io.observe(el));
+
+  /* ---------- link directo a Pawbound: mostrar su banner ---------- */
+  if (location.hash === '#pawbound') go(1);
+  go(current);
 })();
 </script>
 </body>
