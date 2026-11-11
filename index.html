@@ -1,266 +1,771 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FLUX | Minecraft Creations</title>
-  <link rel="icon" type="image/png" href="flux-favicon.png">
-<meta name="description" content="FLUX: addons y creaciones para Minecraft Bedrock.">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FLUX | Addons para Minecraft Bedrock</title>
+<meta name="description" content="FLUX crea addons originales para Minecraft Bedrock. Descargá Teo: Los Cinco Días, un addon cooperativo de supervivencia, terror y humor.">
+<meta name="theme-color" content="#0a0712">
+<meta property="og:title" content="FLUX | Addons para Minecraft Bedrock">
+<meta property="og:description" content="Teo: Los Cinco Días. Protegé a Teo de Ginno durante cinco noches.">
+<meta property="og:image" content="assets/teo-escena.jpg">
+<link rel="icon" type="image/png" href="flux-favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;700&family=Pixelify+Sans:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
-
-body {
-  background: #090710;
-  color: white;
-  font-family: Arial, sans-serif;
+:root{
+  --ink:#0a0712;
+  --deep:#150e26;
+  --panel:#1a1230;
+  --line:#2f2150;
+  --violet:#8b4dff;
+  --glow:#c9a2ff;
+  --moon:#e9eeff;
+  --text:#e8e2f5;
+  --muted:#a79bc4;
+  --ember:#ff7a45;
+  --ember-deep:#e0531f;
+  --display:"Pixelify Sans","Trebuchet MS",system-ui,sans-serif;
+  --body:"Figtree","Segoe UI",system-ui,-apple-system,sans-serif;
+  --r:14px;
 }
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{background:var(--ink);color:var(--text);font-family:var(--body);font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--glow);outline-offset:3px;border-radius:6px}
+button{font:inherit;color:inherit;cursor:pointer}
 
-header {
-  height: 82px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 8%;
-  border-bottom: 1px solid #241936;
-  background: #0e0b18;
-}
-
-.logo {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-size: 34px;
-  font-weight: 900;
-  letter-spacing: -2px;
-}
-
-.diamond {
-  width: 43px;
-  height: 43px;
-  background: linear-gradient(135deg,#d8a0ff,#7625e8,#3d087e);
-  transform: rotate(45deg);
-  border: 2px solid #d6a8ff;
-  display: grid;
-  place-items: center;
-  box-shadow: 0 0 18px #882fff;
-}
-
-.diamond span {
-  transform: rotate(-45deg);
-  font-size: 25px;
-  color: white;
-}
-
-.logo b { color: #bd82ff; }
-
-nav a {
-  color: #c9bddb;
-  text-decoration: none;
-  margin-left: 25px;
-  font-size: 14px;
-}
-
-nav a:hover { color: #c084fc; }
-
-.hero {
-  text-align: center;
-  padding: 115px 20px 100px;
+/* ---------- fondo vivo: estrellas ---------- */
+#stars{position:fixed;inset:0;width:100%;height:100%;z-index:-2;display:block}
+body::before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;
   background:
-    radial-gradient(ellipse at center,#32125b 0%,#130d20 42%,#090710 75%);
+    radial-gradient(ellipse 70% 45% at 78% -5%,rgba(139,77,255,.28),transparent 70%),
+    radial-gradient(ellipse 60% 40% at 5% 105%,rgba(80,40,160,.22),transparent 70%),
+    linear-gradient(180deg,#0a0712 0%,#0d0a1c 55%,#0a0712 100%);}
+
+/* ---------- cabecera ---------- */
+header.bar{position:fixed;top:0;left:0;right:0;z-index:50;height:72px;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:0 max(5%,18px);
+  background:rgba(10,7,18,.55);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid transparent;transition:border-color .3s,background .3s}
+header.bar.solid{border-color:var(--line);background:rgba(10,7,18,.86)}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:var(--display);font-size:30px;font-weight:700;letter-spacing:-1px}
+.diamond{width:34px;height:34px;background:linear-gradient(135deg,#d8a0ff,#7625e8 55%,#3d087e);transform:rotate(45deg);border:2px solid #d6a8ff;display:grid;place-items:center;box-shadow:0 0 18px #882fff88;border-radius:3px}
+.diamond span{transform:rotate(-45deg);font-size:19px;line-height:1;color:#fff}
+.logo b{color:var(--glow)}
+nav{display:flex;align-items:center;gap:6px}
+nav a{color:var(--muted);text-decoration:none;font-size:15px;font-weight:500;padding:8px 14px;border-radius:999px;transition:color .2s,background .2s}
+nav a:hover{color:#fff;background:rgba(139,77,255,.16)}
+nav a.nav-cta{color:#1a0b06;background:var(--ember);font-weight:700;margin-left:8px}
+nav a.nav-cta:hover{background:#ff9166;color:#1a0b06}
+.burger{display:none;background:none;border:1px solid var(--line);border-radius:10px;width:44px;height:44px;place-items:center}
+.burger i,.burger i::before,.burger i::after{display:block;width:20px;height:2px;background:var(--text);position:relative;transition:.25s}
+.burger i::before,.burger i::after{content:"";position:absolute;left:0}
+.burger i::before{top:-6px}.burger i::after{top:6px}
+.burger[aria-expanded="true"] i{background:transparent}
+.burger[aria-expanded="true"] i::before{top:0;transform:rotate(45deg)}
+.burger[aria-expanded="true"] i::after{top:0;transform:rotate(-45deg)}
+#progress{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--violet),var(--ember));z-index:60}
+
+/* ---------- hero ---------- */
+.hero{position:relative;min-height:max(620px,min(100svh,940px));overflow:hidden;isolation:isolate;display:flex;align-items:flex-start;padding:112px max(5%,20px) 0}
+.stack{position:absolute;inset:0;z-index:-1}
+.layer{max-width:none;position:absolute;left:-4%;top:-4%;width:108%;height:108%;object-fit:cover;object-position:52% 72%;will-change:transform;user-select:none;-webkit-user-drag:none}
+.stack::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:
+    linear-gradient(90deg,rgba(10,7,18,.78) 0%,rgba(10,7,18,.42) 34%,transparent 58%),
+    linear-gradient(180deg,rgba(10,7,18,.55) 0,transparent 24%,transparent 70%,var(--ink) 100%)}
+.flash{position:absolute;inset:0;background:radial-gradient(ellipse at 45% 0,#dfe6ff 0,rgba(150,170,255,.35) 45%,transparent 75%);opacity:0;pointer-events:none;z-index:1;mix-blend-mode:screen}
+.flash.on{animation:flash .55s ease-out}
+@keyframes flash{0%{opacity:0}8%{opacity:.85}22%{opacity:.15}34%{opacity:.6}100%{opacity:0}}
+.hero-copy{position:relative;z-index:2;max-width:640px}
+.hero h1{font-family:var(--display);font-weight:700;font-size:clamp(44px,7.4vw,92px);line-height:.98;letter-spacing:-.02em;text-shadow:0 4px 0 #1a0b3d,0 10px 40px rgba(0,0,0,.6)}
+.hero h1 em{font-style:normal;color:var(--glow)}
+.hero p.lead{margin-top:20px;font-size:clamp(17px,2vw,20px);color:#d9d0ee;max-width:30em;text-shadow:0 2px 14px rgba(0,0,0,.8)}
+.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:52px;padding:0 26px;border-radius:12px;font-weight:700;font-size:16px;text-decoration:none;border:2px solid transparent;transition:transform .15s,box-shadow .2s,background .2s}
+.btn:active{transform:translateY(1px)}
+.btn-ember{background:var(--ember);color:#1a0b06;box-shadow:0 6px 0 var(--ember-deep),0 12px 30px rgba(255,122,69,.28)}
+.btn-ember:hover{background:#ff9166;transform:translateY(-2px);box-shadow:0 8px 0 var(--ember-deep),0 16px 34px rgba(255,122,69,.34)}
+.btn-ghost{background:rgba(20,12,40,.55);border-color:#4a3584;color:var(--text);backdrop-filter:blur(6px)}
+.btn-ghost:hover{border-color:var(--glow);background:rgba(139,77,255,.18)}
+.btn-small{min-height:44px;padding:0 18px;font-size:15px}
+.hero-meta{margin-top:22px;font-size:14px;color:#c4b9df;text-shadow:0 2px 10px rgba(0,0,0,.8)}
+.bubble{position:absolute;z-index:3;max-width:240px;padding:10px 14px;border-radius:14px 14px 14px 4px;font-size:15px;line-height:1.4;font-weight:500;pointer-events:none;opacity:0;transform:translateY(6px) scale(.96);transition:opacity .2s,transform .2s}
+.bubble.show{opacity:1;transform:none}
+.bubble.teo{background:#f4f1ff;color:#20123f;box-shadow:0 8px 24px rgba(0,0,0,.5)}
+.bubble.ginno{background:#2a0a14;color:#ffd2d2;border:1px solid #8a1f2c;box-shadow:0 8px 24px rgba(0,0,0,.6)}
+.bubble b{display:block;font-family:var(--display);font-size:14px;margin-bottom:2px}
+.hint{position:absolute;z-index:2;left:max(5%,20px);bottom:22px;font-size:14px;color:#b9acd8;display:flex;align-items:center;gap:8px;text-shadow:0 2px 10px #000}
+.hint i{width:8px;height:8px;border-radius:50%;background:var(--ember);box-shadow:0 0 0 0 rgba(255,122,69,.7);animation:ping 2s infinite}
+@keyframes ping{70%{box-shadow:0 0 0 12px rgba(255,122,69,0)}100%{box-shadow:0 0 0 0 rgba(255,122,69,0)}}
+
+/* ---------- secciones ---------- */
+.block{padding:92px max(5%,20px)}
+.wrap{max-width:1120px;margin:0 auto}
+h2{font-family:var(--display);font-weight:700;font-size:clamp(32px,4.6vw,50px);line-height:1.05;letter-spacing:-.01em}
+.sub{margin-top:12px;color:var(--muted);max-width:36em}
+.head{margin-bottom:40px}
+
+/* tarjetas de addons */
+.addons{display:grid;grid-template-columns:1.55fr 1fr;gap:22px}
+.card{background:linear-gradient(180deg,rgba(26,18,48,.92),rgba(16,10,30,.92));border:1px solid var(--line);border-radius:var(--r);overflow:hidden;position:relative}
+.addon-main{display:grid;grid-template-rows:auto 1fr}
+.cover{aspect-ratio:16/9;overflow:hidden;position:relative;background:#0d0a1c}
+.cover img{width:100%;height:100%;object-fit:cover;object-position:50% 60%;transition:transform .8s cubic-bezier(.2,.7,.2,1)}
+.addon-main:hover .cover img{transform:scale(1.04)}
+.cover::after{content:"";position:absolute;inset:auto 0 0 0;height:45%;background:linear-gradient(180deg,transparent,#1a1230)}
+.badge{position:absolute;top:14px;left:14px;z-index:2;background:rgba(10,7,18,.78);backdrop-filter:blur(6px);border:1px solid #4a3584;border-radius:999px;padding:5px 12px;font-size:13px;font-weight:700;color:var(--glow)}
+.addon-body{padding:24px 26px 28px;display:flex;flex-direction:column;gap:14px}
+.addon-body h3{font-family:var(--display);font-size:30px;line-height:1.1}
+.addon-body p{color:var(--muted);max-width:36em}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{border:1px solid var(--line);background:rgba(139,77,255,.1);border-radius:999px;padding:4px 12px;font-size:13.5px;color:#d4c6f5}
+.row{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:6px}
+.soon{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:14px;padding:34px 26px;min-height:340px;border-style:dashed}
+.bolt{width:64px;height:64px;color:var(--ember);filter:drop-shadow(0 0 16px rgba(255,122,69,.6));animation:float 3.2s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-8px)}}
+.soon h3{font-family:var(--display);font-size:26px}
+.soon p{color:var(--muted);max-width:22em}
+
+/* panel del addon */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;border-bottom:1px solid var(--line);margin-bottom:34px}
+.tab{background:none;border:0;border-bottom:3px solid transparent;padding:12px 18px;font-weight:700;font-size:16px;color:var(--muted);margin-bottom:-1px;transition:color .2s,border-color .2s}
+.tab:hover{color:#fff}
+.tab[aria-selected="true"]{color:#fff;border-color:var(--violet)}
+.panel[hidden]{display:none}
+
+/* línea de los cinco días */
+.days{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:28px}
+.day{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 8px 12px;text-align:center;transition:.2s}
+.day:hover{border-color:var(--glow)}
+.day[aria-selected="true"]{background:linear-gradient(180deg,#3a1f78,#241447);border-color:var(--glow);box-shadow:0 0 0 1px var(--glow),0 10px 30px rgba(139,77,255,.3)}
+.day .n{display:block;font-family:var(--display);font-size:32px;line-height:1}
+.day .t{display:block;font-size:13px;color:var(--muted);margin-top:4px}
+.day[aria-selected="true"] .t{color:#e3d4ff}
+.dn{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.slot{border-radius:var(--r);padding:24px;border:1px solid var(--line);min-height:190px}
+.slot h4{font-family:var(--display);font-size:22px;margin-bottom:8px;display:flex;align-items:center;gap:10px}
+.slot p{color:#cfc4e6}
+.slot.d{background:linear-gradient(160deg,#2b2350,#1a1230)}
+.slot.n{background:linear-gradient(160deg,#150b2c,#0c0718);border-color:#3a2766}
+.dot{width:14px;height:14px;display:inline-block;background:#ffd66b;box-shadow:0 0 12px #ffd66b}
+.dot.m{background:#dfe6ff;box-shadow:0 0 12px #9fb3ff}
+.boss{margin-top:16px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.boss[hidden]{display:none}
+.boss div{background:#1d0d20;border:1px solid #6b2140;border-radius:10px;padding:12px 14px;font-size:14.5px;color:#f1cdd6}
+.boss b{display:block;font-family:var(--display);color:#ff9a9a;font-size:17px}
+
+/* personajes */
+.chars{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.char{display:grid;grid-template-columns:.9fr 1.1fr;align-items:end;gap:6px;min-height:340px;padding:24px 22px 0 10px}
+.char .pic{height:100%;display:flex;align-items:flex-end;justify-content:center}
+.char .pic img{max-height:320px;width:auto;object-fit:contain;filter:drop-shadow(0 14px 20px rgba(0,0,0,.6))}
+.char .txt{padding-bottom:24px}
+.char h3{font-family:var(--display);font-size:30px;line-height:1}
+.char p{color:var(--muted);margin:10px 0 14px;font-size:15.5px}
+.char p.say{min-height:3.2em;font-size:15px;font-weight:500;border-left:3px solid var(--violet);padding-left:12px;margin-bottom:14px;color:#efe8ff}
+.char.g p.say{border-color:#c0283a;color:#ffd7d7}
+.char.g{background:linear-gradient(180deg,#1c0b17,#10070f);border-color:#4a1a2c}
+
+/* instalar */
+.steps{list-style:none;display:grid;gap:12px;counter-reset:s}
+.steps li{counter-increment:s}
+.step{width:100%;display:grid;grid-template-columns:44px 1fr;gap:16px;align-items:start;text-align:left;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:18px 20px;transition:.2s}
+.step:hover{border-color:#5a40a0}
+.step .box{width:34px;height:34px;border:2px solid #5a40a0;border-radius:8px;display:grid;place-items:center;font-family:var(--display);font-size:18px;color:var(--glow);transition:.2s}
+.step .box::before{content:counter(s)}
+.step[aria-pressed="true"]{border-color:#3d8f5a;background:#12231c}
+.step[aria-pressed="true"] .box{background:#3d8f5a;border-color:#3d8f5a;color:#fff}
+.step[aria-pressed="true"] .box::before{content:"✓"}
+.step strong{display:block;font-size:17px}
+.step .d{display:block;color:var(--muted);font-size:15.5px;margin-top:2px}
+.prog{margin-top:18px;display:flex;align-items:center;gap:14px;color:var(--muted);font-size:15px}
+.bar2{flex:1;height:8px;background:#1d1438;border-radius:99px;overflow:hidden;max-width:340px}
+.bar2 i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--violet),#58d68d);transition:width .35s}
+.reqs{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.req{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:20px}
+.req b{display:block;font-family:var(--display);font-size:24px;color:var(--glow);line-height:1.1}
+.req span{color:var(--muted);font-size:15px}
+
+/* reseñas */
+.reviews{display:grid;grid-template-columns:.9fr 1.1fr;gap:26px;align-items:start}
+.form{padding:26px;display:grid;gap:14px}
+.avg{display:flex;align-items:center;gap:14px}
+.avg b{font-family:var(--display);font-size:54px;line-height:1}
+.avg span.t{color:var(--muted);font-size:15px;display:block}
+.stars{display:inline-flex;gap:2px}
+.star{background:none;border:0;font-size:32px;line-height:1;color:#3a2c63;padding:2px;transition:transform .12s,color .12s}
+.star.on{color:#ffc94d}
+button.star:hover{transform:scale(1.15)}
+.mini .star{font-size:17px;padding:0;pointer-events:none}
+label{font-weight:700;font-size:15px}
+input[type=text],textarea{width:100%;background:#0f0a20;border:1px solid var(--line);border-radius:10px;padding:12px 14px;color:var(--text);font:inherit;font-size:16px}
+textarea{min-height:104px;resize:vertical}
+input:focus,textarea:focus{border-color:var(--glow);outline:none;box-shadow:0 0 0 3px rgba(201,162,255,.25)}
+.msg{min-height:1.4em;font-size:14.5px;color:#ffb58f}
+.note{font-size:13.5px;color:#8d82ab}
+.list{display:grid;gap:12px}
+.rev{padding:18px 20px;animation:pop .35s ease-out}
+@keyframes pop{from{opacity:0;transform:translateY(8px)}}
+.rev .top{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:6px}
+.rev strong{font-size:16px}
+.rev time{font-size:13px;color:#8d82ab}
+.rev p{color:#d4cae9;font-size:15.5px;overflow-wrap:anywhere}
+.rev .del{background:none;border:0;color:#8d82ab;font-size:13px;margin-top:8px;padding:0;text-decoration:underline}
+.rev .del:hover{color:#ff9a9a}
+.empty{padding:34px 24px;text-align:center;color:var(--muted);border-style:dashed}
+
+/* faq */
+.faq{display:grid;gap:10px;max-width:820px}
+details{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);transition:border-color .2s}
+details[open]{border-color:#5a40a0}
+summary{list-style:none;cursor:pointer;padding:18px 54px 18px 20px;font-weight:700;position:relative}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";position:absolute;right:20px;top:50%;transform:translateY(-50%);font-family:var(--display);font-size:26px;color:var(--glow);transition:transform .25s}
+details[open] summary::after{transform:translateY(-50%) rotate(45deg)}
+details p{padding:0 20px 20px;color:var(--muted)}
+
+/* sobre */
+.about{display:grid;grid-template-columns:1.3fr 1fr;gap:34px;align-items:center}
+.about p{color:#cfc4e6;max-width:34em;margin-top:14px}
+.glyph{display:grid;place-items:center;min-height:230px;border:1px solid var(--line);border-radius:var(--r);background:radial-gradient(ellipse at center,#2a1456 0,#120a24 70%)}
+.diamond.big{width:100px;height:100px;border-width:3px;box-shadow:0 0 70px #882fffaa;border-radius:6px}
+.diamond.big span{font-family:var(--display);font-size:62px}
+
+footer{border-top:1px solid var(--line);padding:34px max(5%,20px);text-align:center;color:#85799f;font-size:14px;background:rgba(10,7,18,.8)}
+footer p+p{margin-top:6px;font-size:13px;color:#6f6590}
+
+/* aparición suave solo al entrar la primera vez */
+.rv{opacity:0;transform:translateY(14px);transition:opacity .6s,transform .6s}
+.rv.in{opacity:1;transform:none}
+
+/* ---------- celular ---------- */
+@media(max-width:900px){
+  .addons,.reviews,.about,.chars{grid-template-columns:1fr}
+  .dn{grid-template-columns:1fr}
+  .boss{grid-template-columns:1fr}
 }
-
-.tag {
-  display: inline-block;
-  padding: 9px 16px;
-  border: 1px solid #7437ad;
-  border-radius: 30px;
-  color: #d7b5ff;
-  font-size: 12px;
-  letter-spacing: 2px;
+@media(max-width:760px){
+  header.bar{height:64px}
+  html{scroll-padding-top:76px}
+  .burger{display:grid}
+  nav{position:fixed;top:64px;left:0;right:0;flex-direction:column;align-items:stretch;gap:4px;padding:14px max(5%,18px) 20px;background:rgba(10,7,18,.97);border-bottom:1px solid var(--line);transform:translateY(-120%);visibility:hidden;transition:transform .3s,visibility .3s}
+  nav.open{transform:none;visibility:visible}
+  nav a{padding:14px;font-size:17px}
+  nav a.nav-cta{margin:6px 0 0;text-align:center}
+  .block{padding:64px max(5%,18px)}
+  .hero{padding-top:92px;min-height:max(640px,100svh)}
+  .stack::after{background:linear-gradient(180deg,rgba(10,7,18,.82) 0,rgba(10,7,18,.45) 40%,transparent 62%,var(--ink) 100%)}
+  .layer{object-position:50% 80%}
+  .days{gap:5px}
+  .day{padding:10px 2px}.day .n{font-size:26px}.day .t{font-size:11.5px}
+  .char{grid-template-columns:.8fr 1.2fr;min-height:0;padding-top:18px}
+  .char .pic img{max-height:230px}
+  .tab{padding:10px 12px;font-size:15px}
+  .hint{display:none}
 }
-
-.hero h1 {
-  font-size: clamp(48px,9vw,85px);
-  margin: 25px 0 15px;
-  letter-spacing: -4px;
-}
-
-.hero h1 span { color: #b66aff; }
-
-.hero p {
-  color: #b8a9ca;
-  font-size: 17px;
-  line-height: 1.7;
-}
-
-.main-button {
-  display: inline-block;
-  margin-top: 35px;
-  background: linear-gradient(100deg,#963ef0,#6721c2);
-  color: white;
-  padding: 16px 30px;
-  border-radius: 9px;
-  text-decoration: none;
-  font-weight: bold;
-  box-shadow: 0 0 25px #7126b955;
-}
-
-section {
-  padding: 65px 9%;
-}
-
-.section-title {
-  font-size: 30px;
-  margin-bottom: 12px;
-}
-
-.subtitle {
-  color: #a99bb9;
-  margin-bottom: 30px;
-}
-
-.mods {
-  display: grid;
-  grid-template-columns: repeat(auto-fit,minmax(240px,1fr));
-  gap: 22px;
-}
-
-.mod-card {
-  background: #151020;
-  border: 1px solid #30213f;
-  border-radius: 15px;
-  overflow: hidden;
-  transition: .2s;
-}
-
-.mod-card:hover {
-  transform: translateY(-5px);
-  border-color: #974de4;
-}
-
-.mod-cover {
-  height: 155px;
-  display: grid;
-  place-items: center;
-  background: linear-gradient(135deg,#30104f,#130d24);
-  font-size: 55px;
-}
-
-.mod-info { padding: 22px; }
-
-.mod-info h3 { margin-bottom: 10px; }
-
-.mod-info p {
-  color: #ad9fbd;
-  font-size: 14px;
-  line-height: 1.6;
-}
-
-.status {
-  display: inline-block;
-  margin-top: 16px;
-  color: #c994ff;
-  font-size: 12px;
-}
-
-footer {
-  border-top: 1px solid #281a37;
-  padding: 30px;
-  text-align: center;
-  color: #81738e;
-  font-size: 13px;
-}
-
-@media(max-width:600px) {
-  header { padding: 0 5%; }
-  nav a { margin-left: 10px; font-size: 12px; }
-  .logo { font-size: 27px; }
-  section { padding: 50px 6%; }
-}
-.mod-cover img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  border-radius: inherit;
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .bolt,.hint i,.rev{animation:none}
+  .rv{opacity:1;transform:none;transition:none}
+  .flash{display:none}
 }
 </style>
 </head>
 <body>
+<canvas id="stars" aria-hidden="true"></canvas>
+<div id="progress" aria-hidden="true"></div>
 
-<header>
-  <div class="logo">
-    <div class="diamond"><span>F</span></div>
-    <div><b>lux</b></div>
-  </div>
-  <nav>
-    <a href="#inicio">Inicio</a>
-    <a href="#mods">Mods</a>
-    <a href="#sobre">Sobre FLUX</a>
+<header class="bar" id="top">
+  <a class="logo" href="#inicio" aria-label="FLUX, ir al inicio">
+    <span class="diamond"><span>F</span></span><b>lux</b>
+  </a>
+  <button class="burger" id="burger" aria-label="Abrir menú" aria-expanded="false" aria-controls="nav"><i></i></button>
+  <nav id="nav" aria-label="Principal">
+    <a href="#addons">Addons</a>
+    <a href="#teo">Teo</a>
+    <a href="#resenas">Reseñas</a>
+    <a href="#preguntas">Preguntas</a>
+    <a href="#flux">FLUX</a>
+    <a class="nav-cta" href="./TEO_Los_Cinco_Dias_v1.0.0.mcaddon" download>Descargar Teo</a>
   </nav>
 </header>
 
 <main>
+  <!-- ===== HERO ===== -->
   <div class="hero" id="inicio">
-    <div class="tag">MINECRAFT BEDROCK CREATIONS</div>
-    <h1>CREATE. <span>EXPLORE.</span></h1>
-    <p>
-      Descubrí nuevas experiencias para Minecraft.<br>
-      Addons originales creados por FLUX.
-    </p>
-    <a class="main-button" href="#mods">EXPLORAR ADDONS →</a>
+    <div class="stack" id="stack" aria-hidden="true">
+      <img class="layer" data-depth="0.25" src="assets/sky.jpg" alt="" width="2400" height="1350" fetchpriority="high">
+      <img class="layer" data-depth="0.6" src="assets/forest.webp" alt="" width="2400" height="1350">
+      <img class="layer" data-depth="1.1" id="ginnoLayer" src="assets/ginno.webp" alt="" width="2400" height="1350">
+      <img class="layer" data-depth="1.8" id="teoLayer" src="assets/teo.webp" alt="" width="2400" height="1350">
+      <div class="flash" id="flash"></div>
+    </div>
+
+    <div class="hero-copy">
+      <h1>Sobreviví cinco noches.<br><em>Protegé a Teo.</em></h1>
+      <p class="lead">Teo: Los Cinco Días es el primer addon de FLUX para Minecraft Bedrock. Un caniche mal hablado, un gigante con encendedor y tu refugio en el medio.</p>
+      <div class="actions">
+        <a class="btn btn-ember" href="./TEO_Los_Cinco_Dias_v1.0.0.mcaddon" download>Descargar el addon</a>
+        <a class="btn btn-ghost" href="#teo">Ver cómo se juega</a>
+      </div>
+      <p class="hero-meta">Versión 1.0.0 para Minecraft Bedrock 1.26.60 o superior. Pesa 2,8 MB.</p>
+    </div>
+
+    <div class="bubble teo" id="bubbleTeo" role="status" aria-live="polite"></div>
+    <div class="bubble ginno" id="bubbleGinno" role="status" aria-live="polite"></div>
+    <p class="hint"><i></i>Tocá a Teo o a Ginno</p>
   </div>
 
-  <section id="mods">
-    <h2 class="section-title">Nuestros proyectos</h2>
-    <p class="subtitle">Descubrí las creaciones de FLUX.</p>
+  <!-- ===== ADDONS ===== -->
+  <section class="block" id="addons">
+    <div class="wrap">
+      <div class="head rv">
+        <h2>Nuestros addons</h2>
+        <p class="sub">Cada addon de FLUX es una historia completa con personajes, reglas y un final.</p>
+      </div>
+      <div class="addons">
+        <article class="card addon-main rv">
+          <div class="cover">
+            <span class="badge">Disponible</span>
+            <img src="assets/teo-escena.jpg" alt="Teo, un caniche blanco cúbico, junto a Ginno, un gigante encorvado, en un bosque de noche" width="1280" height="720" loading="lazy">
+          </div>
+          <div class="addon-body">
+            <h3>Teo: Los Cinco Días</h3>
+            <p>Cooperativo de supervivencia, terror y humor. Cada noche Ginno se acerca más a Teo. El día cinco tenés que acabar con él.</p>
+            <div class="chips"><span class="chip">Supervivencia</span><span class="chip">Terror</span><span class="chip">Humor</span><span class="chip">Pensado para jugar en cooperativo</span></div>
+            <div class="row">
+              <a class="btn btn-ember btn-small" href="./TEO_Los_Cinco_Dias_v1.0.0.mcaddon" download>Descargar</a>
+              <a class="btn btn-ghost btn-small" href="#teo">Ver detalles</a>
+              <button class="btn btn-ghost btn-small" id="share" type="button">Compartir</button>
+            </div>
+          </div>
+        </article>
 
-    <div class="mods">
-      <article class="mod-card">
-<div class="mod-cover">
-  <img src="teo-portada.png" alt="Teo - Los Cinco Días">
-</div>
-        <div class="mod-info">
-          <h3>Teo Addon</h3>
-          <p>
-            Una nueva experiencia para Minecraft Bedrock.
-            Descubrí este proyecto creado por FLUX.
-          </p>
-          <span class="status">● PROYECTO CREADO</span>
-        </div>
-        <a href="./TEO_Los_Cinco_Dias_v1.0.0.mcaddon" download class="download-btn">
-  DESCARGAR ADDON
-</a>
-      </article>
-
-      <article class="mod-card">
-        <div class="mod-cover">⚡</div>
-        <div class="mod-info">
-          <h3>Próximamente</h3>
-          <p>Estamos preparando nuevas creaciones para Minecraft.</p>
-          <span class="status">● EN DESARROLLO</span>
-        </div>
-      </article>
+        <article class="card soon rv">
+          <svg class="bolt" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M13.5 2 5 13.2h5.2L9 22l9.5-12.2h-5.4z"/></svg>
+          <h3>El próximo addon</h3>
+          <p>Estamos preparando una nueva creación. Cuando esté lista, la vas a encontrar acá.</p>
+        </article>
+      </div>
     </div>
   </section>
 
-  <section id="sobre">
-    <h2 class="section-title">¿Qué es FLUX?</h2>
-    <p class="subtitle">
-      FLUX es un proyecto independiente dedicado a crear
-      addons y experiencias para Minecraft Bedrock.
-      Cada proyecto comienza con una idea y se convierte
-      en una nueva aventura.
-      <br><br>
-      Creado por Tobi ponx.
-    </p>
+  <!-- ===== DETALLE DE TEO ===== -->
+  <section class="block" id="teo">
+    <div class="wrap">
+      <div class="head rv">
+        <h2>Cómo se juega Teo</h2>
+        <p class="sub">Rompé tu primer tronco y Teo aparece. Desde ahí, cada noche es peor que la anterior.</p>
+      </div>
+
+      <div class="tabs" role="tablist" aria-label="Detalles del addon">
+        <button class="tab" role="tab" id="t-dias" aria-controls="p-dias" aria-selected="true">Los cinco días</button>
+        <button class="tab" role="tab" id="t-pers" aria-controls="p-pers" aria-selected="false" tabindex="-1">Personajes</button>
+        <button class="tab" role="tab" id="t-inst" aria-controls="p-inst" aria-selected="false" tabindex="-1">Instalación</button>
+        <button class="tab" role="tab" id="t-req" aria-controls="p-req" aria-selected="false" tabindex="-1">Requisitos</button>
+      </div>
+
+      <div class="panel" id="p-dias" role="tabpanel" aria-labelledby="t-dias">
+        <div class="days" id="days" role="tablist" aria-label="Elegí un día"></div>
+        <div class="dn" id="dayDetail" aria-live="polite"></div>
+        <div class="boss" id="boss" hidden>
+          <div><b>Fase 1</b>Ginno salta cerca de la base y trata de agarrar a Teo.</div>
+          <div><b>Fase 2</b>Más rápido y más fuerte. Empiezan a caer rayos cerca tuyo.</div>
+          <div><b>Fase 3</b>No frena. Tenés muy poco tiempo para hacer que suelte a Teo.</div>
+        </div>
+      </div>
+
+      <div class="panel" id="p-pers" role="tabpanel" aria-labelledby="t-pers" hidden>
+        <div class="chars">
+          <article class="card char t">
+            <div class="pic"><img src="assets/teo-card.webp" alt="Teo, caniche blanco cúbico" width="310" height="510" loading="lazy"></div>
+            <div class="txt">
+              <h3>Teo</h3>
+              <p>Un caniche blanco, chiquito y sarcástico. Te sigue a todas partes, se sienta si se lo pedís y opina de todo lo que construís. Nada puede lastimarlo.</p>
+              <p class="say" id="sayTeo" aria-live="polite">Tocá el botón y te contesto. Tengo todo el día.</p>
+              <button class="btn btn-ghost btn-small" type="button" data-talk="teo">Que hable Teo</button>
+            </div>
+          </article>
+          <article class="card char g">
+            <div class="pic"><img src="assets/ginno-card.webp" alt="Ginno, un gigante encorvado de boca enorme" width="354" height="747" loading="lazy"></div>
+            <div class="txt">
+              <h3>Ginno</h3>
+              <p>Enorme, encorvado y con una boca que no cierra. Llega de noche con tormenta, se teletransporta y quiere quemar a Teo con su encendedor.</p>
+              <p class="say" id="sayGinno" aria-live="polite">...</p>
+              <button class="btn btn-ghost btn-small" type="button" data-talk="ginno">Que hable Ginno</button>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <div class="panel" id="p-inst" role="tabpanel" aria-labelledby="t-inst" hidden>
+        <ol class="steps" id="steps">
+          <li><button class="step" type="button" aria-pressed="false"><span class="box"></span><span><strong>Descargá el archivo</strong><span class="d">Es un solo archivo .mcaddon con los dos packs adentro.</span></span></button></li>
+          <li><button class="step" type="button" aria-pressed="false"><span class="box"></span><span><strong>Abrilo con Minecraft</strong><span class="d">En Windows, doble clic. En celular, tocá el archivo y elegí Minecraft. El juego lo importa solo.</span></span></button></li>
+          <li><button class="step" type="button" aria-pressed="false"><span class="box"></span><span><strong>Creá un mundo y activá los packs</strong><span class="d">En Complementos, activá TEO: Los Cinco Días en el pack de comportamiento y en el de recursos.</span></span></button></li>
+          <li><button class="step" type="button" aria-pressed="false"><span class="box"></span><span><strong>Entrá y rompé un tronco</strong><span class="d">Con el primer tronco roto aparece Teo y empieza la historia.</span></span></button></li>
+        </ol>
+        <div class="prog"><div class="bar2" aria-hidden="true"><i id="barFill"></i></div><span id="progText">0 de 4 pasos</span></div>
+      </div>
+
+      <div class="panel" id="p-req" role="tabpanel" aria-labelledby="t-req" hidden>
+        <div class="reqs">
+          <div class="req"><b>1.26.60+</b><span>Versión mínima de Minecraft Bedrock. Probado en la V26.63.</span></div>
+          <div class="req"><b>2,8 MB</b><span>Lo que pesa el archivo .mcaddon.</span></div>
+          <div class="req"><b>1.0.0</b><span>Primera versión pública del addon.</span></div>
+          <div class="req"><b>Español</b><span>Textos y voces de los personajes en español rioplatense.</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== RESEÑAS ===== -->
+  <section class="block" id="resenas">
+    <div class="wrap">
+      <div class="head rv">
+        <h2>Reseñas</h2>
+        <p class="sub">Contá cómo te fue con Teo. ¿Llegaste al día cinco?</p>
+      </div>
+      <div class="reviews">
+        <form class="card form rv" id="revForm" novalidate>
+          <div class="avg" aria-live="polite"><b id="avgNum">–</b><div><div class="stars mini" id="avgStars" aria-hidden="true"></div><span class="t" id="avgText">Todavía no hay reseñas</span></div></div>
+          <div>
+            <label id="ratingLabel">Tu puntaje</label>
+            <div class="stars" id="rate" role="radiogroup" aria-labelledby="ratingLabel"></div>
+          </div>
+          <div><label for="rName">Tu nombre</label><input type="text" id="rName" maxlength="24" autocomplete="nickname" placeholder="Como te dicen en Minecraft"></div>
+          <div><label for="rText">Tu reseña</label><textarea id="rText" maxlength="400" placeholder="Qué te gustó, qué noche te costó más..."></textarea></div>
+          <p class="msg" id="rMsg" role="alert"></p>
+          <button class="btn btn-ember" type="submit">Publicar reseña</button>
+          <p class="note">Las reseñas se guardan en este navegador y solo las ves vos.</p>
+        </form>
+        <div class="list" id="revList" aria-live="polite"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FAQ ===== -->
+  <section class="block" id="preguntas">
+    <div class="wrap">
+      <div class="head rv"><h2>Preguntas frecuentes</h2></div>
+      <div class="faq rv">
+        <details><summary>¿Teo puede morir?</summary><p>No. Nada le hace daño, ni siquiera tus golpes. Lo único que termina la partida es que Ginno lo agarre y se acabe el tiempo para hacer que lo suelte.</p></details>
+        <details><summary>¿Qué hago si Ginno agarra a Teo?</summary><p>Pegale a Ginno hasta que lo suelte. Después queda aturdido unos segundos, Teo sale corriendo y Ginno lo persigue. Si no lo soltás a tiempo, perdés.</p></details>
+        <details><summary>¿Cómo evito que rompa mi refugio?</summary><p>Ginno rompe madera, tierra y vidrio desde la noche 3, y piedra y ladrillos desde la 4. Los bloques pesados lo frenan. Construí con ellos.</p></details>
+        <details><summary>¿Para qué sirve el Hueso de Teo?</summary><p>Es el arma que Teo te da al amanecer del día cinco, para la pelea contra el jefe final.</p></details>
+        <details><summary>¿Cómo empiezo de nuevo?</summary><p>Creá un mundo nuevo con el addon activado. La historia queda guardada en cada mundo.</p></details>
+        <details><summary>¿Puedo jugarlo con amigos?</summary><p>Fue pensado para jugar en cooperativo: el progreso de la historia es compartido entre todos los jugadores del mundo.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SOBRE FLUX ===== -->
+  <section class="block" id="flux">
+    <div class="wrap about">
+      <div class="rv">
+        <h2>¿Qué es FLUX?</h2>
+        <p>FLUX es un estudio independiente que crea addons y experiencias para Minecraft Bedrock. Cada proyecto empieza con una idea y termina siendo una aventura completa, con su historia, sus personajes y su final.</p>
+        <p>Teo: Los Cinco Días es el primero. Vienen más.</p>
+      </div>
+      <div class="glyph rv" aria-hidden="true"><div class="diamond big"><span>F</span></div></div>
+    </div>
   </section>
 </main>
 
 <footer>
-  © 2026 FLUX Studios · All rights reserved.
+  <p>© 2026 FLUX Studios. Todos los derechos reservados.</p>
+  <p>Minecraft es una marca de Mojang Studios y Microsoft. Este sitio no está afiliado a ellos.</p>
 </footer>
 
+<script>
+(() => {
+  const $ = (s, c = document) => c.querySelector(s);
+  const $$ = (s, c = document) => [...c.querySelectorAll(s)];
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const store = {
+    get(k, d) { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch { return d; } },
+    set(k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch {} }
+  };
+
+  /* ---------- cabecera ---------- */
+  const header = $('#top'), prog = $('#progress');
+  const onScroll = () => {
+    header.classList.toggle('solid', scrollY > 24);
+    const h = document.documentElement.scrollHeight - innerHeight;
+    prog.style.width = (h > 0 ? scrollY / h * 100 : 0) + '%';
+  };
+  addEventListener('scroll', onScroll, { passive: true }); onScroll();
+  const burger = $('#burger'), nav = $('#nav');
+  const closeNav = () => { nav.classList.remove('open'); burger.setAttribute('aria-expanded', 'false'); };
+  burger.addEventListener('click', () => {
+    const open = nav.classList.toggle('open'); burger.setAttribute('aria-expanded', open);
+  });
+  $$('a', nav).forEach(a => a.addEventListener('click', closeNav));
+  addEventListener('keydown', e => { if (e.key === 'Escape') closeNav(); });
+
+  /* ---------- fondo: estrellas ---------- */
+  const cv = $('#stars'), cx = cv.getContext('2d');
+  let stars = [], shoot = null, W = 0, H = 0;
+  function sizeStars() {
+    const dpr = Math.min(devicePixelRatio || 1, 2);
+    W = innerWidth; H = innerHeight; cv.width = W * dpr; cv.height = H * dpr; cx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const n = Math.round(W * H / 5200);
+    stars = Array.from({ length: n }, () => ({ x: Math.random() * W, y: Math.random() * H, s: Math.random() < .12 ? 3 : Math.random() < .5 ? 2 : 1, p: Math.random() * 6.28, v: .5 + Math.random() * 1.5 }));
+    if (reduce) drawStars(0);
+  }
+  function drawStars(t) {
+    cx.clearRect(0, 0, W, H);
+    for (const s of stars) {
+      const a = reduce ? .6 : .35 + .55 * (.5 + .5 * Math.sin(t / 1000 * s.v + s.p));
+      cx.fillStyle = `rgba(214,222,255,${a})`; cx.fillRect(s.x | 0, s.y | 0, s.s, s.s);
+    }
+    if (!reduce) {
+      if (!shoot && Math.random() < .0016) shoot = { x: Math.random() * W * .8, y: Math.random() * H * .35, l: 0 };
+      if (shoot) {
+        shoot.l += 14; shoot.x += 10; shoot.y += 5;
+        const g = cx.createLinearGradient(shoot.x, shoot.y, shoot.x - 120, shoot.y - 60);
+        g.addColorStop(0, 'rgba(255,255,255,.9)'); g.addColorStop(1, 'rgba(255,255,255,0)');
+        cx.strokeStyle = g; cx.lineWidth = 2; cx.beginPath(); cx.moveTo(shoot.x, shoot.y); cx.lineTo(shoot.x - 120, shoot.y - 60); cx.stroke();
+        if (shoot.l > 400) shoot = null;
+      }
+      requestAnimationFrame(drawStars);
+    }
+  }
+  sizeStars(); addEventListener('resize', sizeStars);
+  if (!reduce) requestAnimationFrame(drawStars);
+
+  /* ---------- hero: parallax en capas ---------- */
+  const stack = $('#stack'), layers = $$('.layer', stack), hero = $('.hero');
+  let tx = 0, ty = 0, cxp = 0, cyp = 0, heroVisible = true, usedPointer = false;
+  hero.addEventListener('pointermove', e => {
+    usedPointer = true; const r = hero.getBoundingClientRect();
+    tx = ((e.clientX - r.left) / r.width - .5) * 2; ty = ((e.clientY - r.top) / r.height - .5) * 2;
+  });
+  hero.addEventListener('pointerleave', () => { tx = 0; ty = 0; });
+  new IntersectionObserver(([en]) => { heroVisible = en.isIntersecting; }).observe(hero);
+  function parallax(t) {
+    if (heroVisible && !reduce) {
+      if (!usedPointer) { tx = Math.sin(t / 3800) * .55; ty = Math.cos(t / 5200) * .25; }
+      cxp += (tx - cxp) * .07; cyp += (ty - cyp) * .07;
+      const k = Math.min(innerWidth, 1400) / 1400 * 22, sy = Math.min(scrollY, innerHeight) * .06;
+      layers.forEach(l => {
+        const d = +l.dataset.depth;
+        l.style.transform = `translate3d(${-cxp * k * d}px,${-cyp * k * d * .6 + sy * d}px,0)`;
+      });
+    }
+    requestAnimationFrame(parallax);
+  }
+  requestAnimationFrame(parallax);
+
+  const flash = $('#flash');
+  function lightning() {
+    if (!reduce && heroVisible) { flash.classList.remove('on'); void flash.offsetWidth; flash.classList.add('on'); }
+    setTimeout(lightning, 9000 + Math.random() * 9000);
+  }
+  if (!reduce) setTimeout(lightning, 4500);
+
+  /* ---------- hero: tocar a Teo o a Ginno ---------- */
+  const TEO_LINES = [
+    '¡Ey! Soy chiquito y bien educado, no se pega.',
+    'Cuidado con las manos, que soy de cristal.',
+    'Ni yo, que soy chiquito, me dejo pegar así.',
+    '¡Esquivá, boludo, esquivá!',
+    'Más tablones, menos mirarme.'
+  ];
+  const GINNO_LINES = [
+    'Teo... sé que estás ahí.',
+    'Hoy es la noche, perrito.',
+    'Qué linda casita... se va a prender muy bien.',
+    'No podés esconderte.',
+    'Tengo el encendedor, Teo... y todo el tiempo del mundo.'
+  ];
+  const LINES = { teo: TEO_LINES, ginno: GINNO_LINES };
+  const lastIdx = { teo: -1, ginno: -1 };
+  const nextLine = (who) => {
+    const arr = LINES[who]; let i;
+    do { i = Math.floor(Math.random() * arr.length); } while (i === lastIdx[who]);
+    lastIdx[who] = i; return arr[i];
+  };
+  const objPos = () => {
+    const p = getComputedStyle($('#teoLayer')).objectPosition.split(' ').map(parseFloat);
+    return [p[0] / 100, p[1] / 100];
+  };
+  function makeHit(img) {
+    const c = document.createElement('canvas'); let ctx = null;
+    const load = () => { c.width = img.naturalWidth; c.height = img.naturalHeight; ctx = c.getContext('2d', { willReadFrequently: true }); ctx.drawImage(img, 0, 0); };
+    if (img.complete && img.naturalWidth) load(); else img.addEventListener('load', load, { once: true });
+    return (px, py) => {
+      if (!ctx) return false;
+      const r = img.getBoundingClientRect(), nw = img.naturalWidth, nh = img.naturalHeight, [fx, fy] = objPos();
+      const s = Math.max(r.width / nw, r.height / nh);
+      const ix = Math.round((px - r.left - (r.width - nw * s) * fx) / s), iy = Math.round((py - r.top - (r.height - nh * s) * fy) / s);
+      if (ix < 4 || iy < 4 || ix >= nw - 4 || iy >= nh - 4) return false;
+      try {
+        const d = ctx.getImageData(ix - 3, iy - 3, 7, 7).data;
+        for (let i = 3; i < d.length; i += 4) if (d[i] > 100) return true;
+      } catch { return false; }
+      return false;
+    };
+  }
+  const hitTeo = makeHit($('#teoLayer')), hitGinno = makeHit($('#ginnoLayer'));
+  const bubbles = { teo: $('#bubbleTeo'), ginno: $('#bubbleGinno') };
+  const timers = {};
+  function speak(who, x, y) {
+    const b = bubbles[who], hr = hero.getBoundingClientRect();
+    b.innerHTML = `<b>${who === 'teo' ? 'Teo' : 'Ginno'}</b>${nextLine(who)}`;
+    const left = Math.min(Math.max(x - hr.left - 20, 12), hr.width - 252);
+    b.style.left = left + 'px'; b.style.top = Math.max(y - hr.top - 90, 80) + 'px';
+    b.classList.add('show'); clearTimeout(timers[who]); timers[who] = setTimeout(() => b.classList.remove('show'), 3200);
+  }
+  hero.addEventListener('click', e => {
+    if (e.target.closest('a,button')) return;
+    if (hitTeo(e.clientX, e.clientY)) speak('teo', e.clientX, e.clientY);
+    else if (hitGinno(e.clientX, e.clientY)) speak('ginno', e.clientX, e.clientY);
+  });
+  hero.addEventListener('pointermove', e => {
+    if (e.pointerType !== 'mouse') return;
+    hero.style.cursor = (hitTeo(e.clientX, e.clientY) || hitGinno(e.clientX, e.clientY)) ? 'pointer' : '';
+  });
+
+  /* ---------- compartir ---------- */
+  $('#share').addEventListener('click', async (e) => {
+    const btn = e.currentTarget, data = { title: 'Teo: Los Cinco Días', text: 'Addon de Minecraft Bedrock de FLUX', url: location.href.split('#')[0] };
+    try {
+      if (navigator.share) await navigator.share(data);
+      else { await navigator.clipboard.writeText(data.url); btn.textContent = 'Enlace copiado'; setTimeout(() => btn.textContent = 'Compartir', 1800); }
+    } catch {}
+  });
+
+  /* ---------- pestañas ---------- */
+  const tabs = $$('.tab');
+  function selectTab(t, focus) {
+    tabs.forEach(x => {
+      const on = x === t; x.setAttribute('aria-selected', on); x.tabIndex = on ? 0 : -1;
+      $('#' + x.getAttribute('aria-controls')).hidden = !on;
+    });
+    if (focus) t.focus();
+  }
+  tabs.forEach((t, i) => {
+    t.addEventListener('click', () => selectTab(t));
+    t.addEventListener('keydown', e => {
+      let j = null;
+      if (e.key === 'ArrowRight') j = (i + 1) % tabs.length; else if (e.key === 'ArrowLeft') j = (i - 1 + tabs.length) % tabs.length;
+      else if (e.key === 'Home') j = 0; else if (e.key === 'End') j = tabs.length - 1;
+      if (j !== null) { e.preventDefault(); selectTab(tabs[j], true); }
+    });
+  });
+
+  /* ---------- los cinco días ---------- */
+  const DAYS = [
+    { t: 'Aparece Teo', d: 'Rompés tu primer tronco y aparece Teo, un caniche blanco que te pide ayuda: Ginno quiere quemarlo con su encendedor. Juntá madera y construí un refugio antes de que anochezca.',
+      n: 'Cae una tormenta. Ginno aparece a lo lejos, te mira, habla y llama a Teo. Si Teo se va caminando hacia él, tocalo para tranquilizarlo.' },
+    { t: 'Se acerca', d: 'Seguí reforzando la base. Teo comenta todo lo que hacés, sobre todo lo que hacés mal.',
+      n: 'Ginno aparece más veces y salta cada vez más cerca de la base, como un enderman. Sus llamados a Teo se vuelven más seguidos.' },
+    { t: 'Rompe bloques', d: 'Ya no alcanza con mirar el cielo. Armá un refugio resistente.',
+      n: 'Ginno empieza a asaltar: camina hacia Teo rompiendo madera, tierra y vidrio. Si lo agarra, pegale hasta que lo suelte. Golpearlo mientras camina lo aturde y lo hace saltar lejos.' },
+    { t: 'Rompe piedra', d: 'Lo que construiste con madera ya no sirve. Es hora de los bloques pesados.',
+      n: 'Ahora también rompe piedra y ladrillos. Los bloques pesados lo frenan y, si no puede avanzar, se rinde y salta a otro lado.' },
+    { t: 'El jefe', d: 'Al amanecer, Teo te entrega el Hueso de Teo: un arma hecha para esta noche.',
+      n: 'Llega el jefe final, con 3000 de vida y tres fases. Si acabás con él, ganás. Si agarra a Teo y no lo soltás a tiempo, perdés.' }
+  ];
+  const daysEl = $('#days'), detail = $('#dayDetail'), boss = $('#boss');
+  DAYS.forEach((d, i) => {
+    const b = document.createElement('button');
+    b.className = 'day'; b.type = 'button'; b.setAttribute('role', 'tab'); b.id = 'day' + (i + 1);
+    b.innerHTML = `<span class="n">${i + 1}</span><span class="t">${d.t}</span>`;
+    b.addEventListener('click', () => showDay(i));
+    b.addEventListener('keydown', e => {
+      let j = null;
+      if (e.key === 'ArrowRight') j = Math.min(i + 1, 4); else if (e.key === 'ArrowLeft') j = Math.max(i - 1, 0);
+      if (j !== null) { e.preventDefault(); showDay(j); $('#day' + (j + 1)).focus(); }
+    });
+    daysEl.appendChild(b);
+  });
+  function showDay(i) {
+    $$('.day', daysEl).forEach((b, k) => { b.setAttribute('aria-selected', k === i); b.tabIndex = k === i ? 0 : -1; });
+    const d = DAYS[i];
+    detail.innerHTML = `<div class="slot d"><h4><span class="dot"></span>Día ${i + 1}</h4><p></p></div><div class="slot n"><h4><span class="dot m"></span>Noche ${i + 1}</h4><p></p></div>`;
+    const ps = $$('p', detail); ps[0].textContent = d.d; ps[1].textContent = d.n;
+    boss.hidden = i !== 4;
+  }
+  showDay(0);
+
+  /* ---------- personajes que hablan ---------- */
+  const sayIdx = { teo: -1, ginno: -1 };
+  $$('[data-talk]').forEach(b => b.addEventListener('click', () => {
+    const who = b.dataset.talk, arr = LINES[who]; let i;
+    do { i = Math.floor(Math.random() * arr.length); } while (i === sayIdx[who]);
+    sayIdx[who] = i; $(who === 'teo' ? '#sayTeo' : '#sayGinno').textContent = arr[i];
+  }));
+
+  /* ---------- pasos de instalación ---------- */
+  const steps = $$('.step'), fill = $('#barFill'), pt = $('#progText');
+  const doneSteps = store.get('flux:steps', []);
+  function paintSteps() {
+    steps.forEach((s, i) => s.setAttribute('aria-pressed', doneSteps.includes(i)));
+    const n = doneSteps.length; fill.style.width = n / steps.length * 100 + '%';
+    pt.textContent = n === steps.length ? '¡Listo! Ya podés jugar.' : `${n} de ${steps.length} pasos`;
+  }
+  steps.forEach((s, i) => s.addEventListener('click', () => {
+    const k = doneSteps.indexOf(i); if (k >= 0) doneSteps.splice(k, 1); else doneSteps.push(i);
+    store.set('flux:steps', doneSteps); paintSteps();
+  }));
+  paintSteps();
+
+  /* ---------- reseñas ---------- */
+  const KEY = 'flux:reviews:teo';
+  let reviews = store.get(KEY, []), rating = 0;
+  const rate = $('#rate'), avgStars = $('#avgStars');
+  const starHTML = (n) => Array.from({ length: 5 }, (_, i) => `<span class="star ${i < Math.round(n) ? 'on' : ''}">★</span>`).join('');
+  for (let i = 1; i <= 5; i++) {
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'star'; b.textContent = '★'; b.setAttribute('role', 'radio'); b.setAttribute('aria-checked', 'false'); b.setAttribute('aria-label', i + (i === 1 ? ' estrella' : ' estrellas'));
+    b.addEventListener('click', () => { rating = i; paintRate(); });
+    b.addEventListener('mouseenter', () => paintRate(i)); b.addEventListener('mouseleave', () => paintRate());
+    rate.appendChild(b);
+  }
+  function paintRate(hover) {
+    const n = hover || rating;
+    $$('.star', rate).forEach((b, i) => { b.classList.toggle('on', i < n); b.setAttribute('aria-checked', i + 1 === rating); });
+  }
+  const esc = s => s.replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  function renderReviews() {
+    const list = $('#revList');
+    if (!reviews.length) {
+      list.innerHTML = '<div class="card empty">Todavía no hay reseñas. Escribí la primera y contale a todos qué noche te costó más.</div>';
+      $('#avgNum').textContent = '–'; avgStars.innerHTML = starHTML(0); $('#avgText').textContent = 'Todavía no hay reseñas'; return;
+    }
+    const avg = reviews.reduce((a, r) => a + r.rating, 0) / reviews.length;
+    $('#avgNum').textContent = avg.toFixed(1).replace('.', ','); avgStars.innerHTML = starHTML(avg);
+    $('#avgText').textContent = reviews.length === 1 ? '1 reseña' : reviews.length + ' reseñas';
+    list.innerHTML = reviews.map((r, i) => `<article class="card rev"><div class="top"><strong>${esc(r.name)}</strong><time>${esc(r.date)}</time></div><div class="stars mini" aria-label="${r.rating} de 5">${starHTML(r.rating)}</div><p>${esc(r.text)}</p><button class="del" type="button" data-i="${i}">Borrar</button></article>`).join('');
+  }
+  $('#revList').addEventListener('click', e => {
+    const b = e.target.closest('.del'); if (!b) return;
+    reviews.splice(+b.dataset.i, 1); store.set(KEY, reviews); renderReviews();
+  });
+  $('#revForm').addEventListener('submit', e => {
+    e.preventDefault();
+    const name = $('#rName').value.trim(), text = $('#rText').value.trim(), msg = $('#rMsg');
+    msg.style.color = '';
+    if (!rating) { msg.textContent = 'Elegí un puntaje de 1 a 5 estrellas.'; return; }
+    if (!name) { msg.textContent = 'Escribí tu nombre.'; $('#rName').focus(); return; }
+    if (text.length < 5) { msg.textContent = 'Contanos algo más en tu reseña.'; $('#rText').focus(); return; }
+    reviews.unshift({ name, text, rating, date: new Date().toLocaleDateString('es-AR') });
+    store.set(KEY, reviews); renderReviews();
+    rating = 0; paintRate(); $('#rText').value = '';
+    msg.style.color = '#7be0a4'; msg.textContent = 'Reseña publicada. Gracias.';
+    setTimeout(() => { msg.textContent = ''; msg.style.color = ''; }, 2600);
+  });
+  renderReviews();
+
+  /* ---------- aparición al hacer scroll ---------- */
+  const io = new IntersectionObserver(es => es.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } }), { threshold: .12 });
+  $$('.rv').forEach(el => io.observe(el));
+})();
+</script>
 </body>
 </html>
