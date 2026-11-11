@@ -1,0 +1,253 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FLUX | Minecraft Creations</title>
+<meta name="description" content="FLUX: addons y creaciones para Minecraft Bedrock.">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: #090710;
+  color: white;
+  font-family: Arial, sans-serif;
+}
+
+header {
+  height: 82px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8%;
+  border-bottom: 1px solid #241936;
+  background: #0e0b18;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 34px;
+  font-weight: 900;
+  letter-spacing: -2px;
+}
+
+.diamond {
+  width: 43px;
+  height: 43px;
+  background: linear-gradient(135deg,#d8a0ff,#7625e8,#3d087e);
+  transform: rotate(45deg);
+  border: 2px solid #d6a8ff;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 0 18px #882fff;
+}
+
+.diamond span {
+  transform: rotate(-45deg);
+  font-size: 25px;
+  color: white;
+}
+
+.logo b { color: #bd82ff; }
+
+nav a {
+  color: #c9bddb;
+  text-decoration: none;
+  margin-left: 25px;
+  font-size: 14px;
+}
+
+nav a:hover { color: #c084fc; }
+
+.hero {
+  text-align: center;
+  padding: 115px 20px 100px;
+  background:
+    radial-gradient(ellipse at center,#32125b 0%,#130d20 42%,#090710 75%);
+}
+
+.tag {
+  display: inline-block;
+  padding: 9px 16px;
+  border: 1px solid #7437ad;
+  border-radius: 30px;
+  color: #d7b5ff;
+  font-size: 12px;
+  letter-spacing: 2px;
+}
+
+.hero h1 {
+  font-size: clamp(48px,9vw,85px);
+  margin: 25px 0 15px;
+  letter-spacing: -4px;
+}
+
+.hero h1 span { color: #b66aff; }
+
+.hero p {
+  color: #b8a9ca;
+  font-size: 17px;
+  line-height: 1.7;
+}
+
+.main-button {
+  display: inline-block;
+  margin-top: 35px;
+  background: linear-gradient(100deg,#963ef0,#6721c2);
+  color: white;
+  padding: 16px 30px;
+  border-radius: 9px;
+  text-decoration: none;
+  font-weight: bold;
+  box-shadow: 0 0 25px #7126b955;
+}
+
+section {
+  padding: 65px 9%;
+}
+
+.section-title {
+  font-size: 30px;
+  margin-bottom: 12px;
+}
+
+.subtitle {
+  color: #a99bb9;
+  margin-bottom: 30px;
+}
+
+.mods {
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(240px,1fr));
+  gap: 22px;
+}
+
+.mod-card {
+  background: #151020;
+  border: 1px solid #30213f;
+  border-radius: 15px;
+  overflow: hidden;
+  transition: .2s;
+}
+
+.mod-card:hover {
+  transform: translateY(-5px);
+  border-color: #974de4;
+}
+
+.mod-cover {
+  height: 155px;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg,#30104f,#130d24);
+  font-size: 55px;
+}
+
+.mod-info { padding: 22px; }
+
+.mod-info h3 { margin-bottom: 10px; }
+
+.mod-info p {
+  color: #ad9fbd;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.status {
+  display: inline-block;
+  margin-top: 16px;
+  color: #c994ff;
+  font-size: 12px;
+}
+
+footer {
+  border-top: 1px solid #281a37;
+  padding: 30px;
+  text-align: center;
+  color: #81738e;
+  font-size: 13px;
+}
+
+@media(max-width:600px) {
+  header { padding: 0 5%; }
+  nav a { margin-left: 10px; font-size: 12px; }
+  .logo { font-size: 27px; }
+  section { padding: 50px 6%; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="diamond"><span>F</span></div>
+    <div><b>lux</b></div>
+  </div>
+  <nav>
+    <a href="#inicio">Inicio</a>
+    <a href="#mods">Mods</a>
+    <a href="#sobre">Sobre FLUX</a>
+  </nav>
+</header>
+
+<main>
+  <div class="hero" id="inicio">
+    <div class="tag">MINECRAFT BEDROCK CREATIONS</div>
+    <h1>CREATE. <span>EXPLORE.</span></h1>
+    <p>
+      Descubrí nuevas experiencias para Minecraft.<br>
+      Addons originales creados por FLUX.
+    </p>
+    <a class="main-button" href="#mods">EXPLORAR ADDONS →</a>
+  </div>
+
+  <section id="mods">
+    <h2 class="section-title">Nuestros proyectos</h2>
+    <p class="subtitle">Descubrí las creaciones de FLUX.</p>
+
+    <div class="mods">
+      <article class="mod-card">
+        <div class="mod-cover">💎</div>
+        <div class="mod-info">
+          <h3>Teo Addon</h3>
+          <p>
+            Una nueva experiencia para Minecraft Bedrock.
+            Descubrí este proyecto creado por FLUX.
+          </p>
+          <span class="status">● PROYECTO CREADO</span>
+        </div>
+      </article>
+
+      <article class="mod-card">
+        <div class="mod-cover">⚡</div>
+        <div class="mod-info">
+          <h3>Próximamente</h3>
+          <p>Estamos preparando nuevas creaciones para Minecraft.</p>
+          <span class="status">● EN DESARROLLO</span>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section id="sobre">
+    <h2 class="section-title">¿Qué es FLUX?</h2>
+    <p class="subtitle">
+      FLUX es un proyecto independiente dedicado a crear
+      addons y experiencias para Minecraft Bedrock.
+      Cada proyecto comienza con una idea y se convierte
+      en una nueva aventura.
+      <br><br>
+      Creado por Tobi ponx.
+    </p>
+  </section>
+</main>
+
+<footer>
+  © 2026 FLUX Studios · All rights reserved.
+</footer>
+
+</body>
+</html>
